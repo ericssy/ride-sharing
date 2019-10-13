@@ -1,0 +1,30 @@
+<html>
+
+<style>
+	.sidenav {
+		position: fixed;
+		width: 100px;
+		left: 10px;
+		padding: 10px;
+		background: linen;
+	}
+</style>
+
+<body>
+
+<a href="{% url 'index' %}">Homepage</a>
+
+<h1>You searched for trips to *destination* from *origin* on *date*:</h1>
+
+<div class="sidenav">
+	<h2>Filter:</h2>
+	Origin <br>
+	Destination <br>
+	Date <br>
+	Time <br>
+	Price <br>
+	Spots <br>
+</div>
+
+</body>
+</html>
