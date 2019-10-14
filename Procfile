@@ -1,1 +1,1 @@
-web: gunicorn letsgetit.wsgi
+web: gunicorn letsgitit.wsgi
