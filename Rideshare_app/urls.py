@@ -2,10 +2,11 @@ from django.contrib import admin
 from django.urls import path
 
 from . import views
+from django.views.generic import TemplateView
 
 
 urlpatterns = [
-    path('', views.index, name='index'),
+ 	path('', views.index, name='index'),
     path('search', views.search, name='search'),
     path('login', views.login, name='login'),
     path('<int:rider_id>/rider_profile', views.rider_profile, name= 'rider_profile'),
