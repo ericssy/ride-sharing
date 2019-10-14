@@ -6,7 +6,7 @@ from django.views.generic import TemplateView
 
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name="Rideshare_app/login.html")),
+ 	path('', views.index, name='index'),
     path('search', views.search, name='search'),
     path('login', views.login, name='login'),
     path('<int:rider_id>/rider_profile', views.rider_profile, name= 'rider_profile'),
