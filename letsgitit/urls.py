@@ -24,5 +24,4 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('', include('Rideshare_app.urls')),
     path('login2/', TemplateView.as_view(template_name="Rideshare_app/login.html")),
-
 ]

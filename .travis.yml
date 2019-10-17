@@ -8,7 +8,8 @@ script:
 deploy:
   provider: heroku
   api_key:
-    secure: 
+    secure: gCm5vzN7qNyfs-ixWqq6jg
   app: Rideshare_app
   on:
     repo: uva-cs3240-f19/project-103-letsgitit
+    branch: master
