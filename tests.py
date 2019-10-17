@@ -1,6 +1,4 @@
 from django.test import TestCase
-from drivers.models import DriverFormPost
-from drivers.forms import DriverForm
 import unittest
 from django.urls import resolve
 
