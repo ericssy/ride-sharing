@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.views import generic
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the RideShare index.")
+    return render(request, 'Rideshare_app/homepage.html')
 
 def search(request):
 	return render(request, 'Rideshare_app/search.html')
