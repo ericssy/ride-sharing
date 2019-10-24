@@ -8,7 +8,7 @@ script:
 deploy:
   provider: heroku
   api_key:
-    secure: 
+    secure: "w02ZywwejpG6Q55/dZ/ozBldvtcUz6XxQ5oGVaDt3JsQip1r9WHe908PKsIZNJVAsZGy+5FPEXjspvrc6t4wDy5O0limoF8AdLmsC1SAPyOCooBNeT1sQ6J1+vB5SpQeNYkQ3H9l/qCBnfzPMmJ8LaMUsRgABEUjbZO7WZBd9D5pDKuBnP+Aq8wuVu7AC69fVvmK55ZE5deJLShgrXXqogbPF0LYEJBaLZW4B26qFb/Ap/LXm74+IrDfiT8/tL8E2YX/kLKuB62Cg4JB92KBd+RpcaOwdWgCYEy8R9YcJVaGoxRG2NCWzpy6FOG+GehQ7XK4fC2BtBwkhNyBbHApRVYMLXQ+ENRrhUdt5FQCW/akOEY+jYy0Tx85AVZXPDbu1eOPSym8CbpdlhdtCiEGLSfP9/6ukFIXgoAG6r7UaTdJQ1nX03/9XAC0WfSVr55tBw55f/LbtjhF2wDHbWzLwQ7rMUT2YslQGIhd4mD1FxL9dijggWEP2dwz2aRKS9qx8S/dchVR95O8XUMYhRyH30vqlKjDCizSkkvWaaZgzYeb1YvLuwmdKDC9CotPYWExrsbZj11csfBAlb8ttm8wgbHcxrT1IyzPVJdPEaoRc38hg9T7qHIQJLkLXT86aPGd8fZpJWrxNiqw3qpDLXWOzwq3UhTqbWrIROa+vyndJ94="
   app: Rideshare_app
   on:
     repo: uva-cs3240-f19/project-103-letsgitit
