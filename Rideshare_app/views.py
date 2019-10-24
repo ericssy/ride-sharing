@@ -3,6 +3,8 @@ from django.shortcuts import get_object_or_404, render
 from .models import Ride, Rider, Driver
 from django.urls import reverse
 from django.views import generic
+from django.utils import timezone
+from django.views.generic.list import ListView
 
 def index(request):
     return render(request, 'Rideshare_app/homepage.html')
@@ -29,3 +31,13 @@ def ride(request, id):
     ride = get_object_or_404(Ride, pk = id)
     context = {"ride" : ride}
     return render(request, 'Rideshare_app/ride.html', context)
+
+
+class RidesListView(generic.ListView):
+    template_name = 'Rideshare_app/upcoming_rides_list.html'
+    context_object_name = 'upcoming_rides_list'
+    paginate_by = 10
+
+    def get_queryset(self):
+        # return all the upcoming trips
+        return Ride.objects.exclude(date__lt = timezone.now(), driver__isnull = True)
