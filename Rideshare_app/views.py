@@ -40,4 +40,4 @@ class RidesListView(generic.ListView):
 
     def get_queryset(self):
         # return all the upcoming trips
-        return Ride.objects.exclude(date__lt = timezone.now(), driver__isnull = True)
+        return Ride.objects.filter(date__gte = timezone.now(), driver__isnull = False)

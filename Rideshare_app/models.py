@@ -8,7 +8,7 @@ class Rider(models.Model):
     email = models.CharField(max_length = 100)
 
     def __str__(self):
-        return self.first_name + self.last_name;
+        return self.first_name + " " + self.last_name;
 
 
 class Driver(models.Model):
@@ -17,7 +17,7 @@ class Driver(models.Model):
     email = models.CharField(max_length = 100)
 
     def __str__(self):
-        return self.first_name + self.last_name;
+        return self.first_name + " " + self.last_name;
 
 
 class Ride(models.Model):
@@ -27,3 +27,7 @@ class Ride(models.Model):
     # each ride links to only one driver
     driver = models.ForeignKey(Driver, null = True, on_delete = models.CASCADE)
     riders = models.ManyToManyField(Rider)
+
+    def __str__(self):
+        return self.driver.first_name + "'s ride from " + self.departure_location + " to "
+        + self.destination_location + " on " + self.date;
