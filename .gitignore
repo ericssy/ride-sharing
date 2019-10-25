@@ -2,9 +2,7 @@ __pycache__/
 staticfiles/
 .DS_Store
 /db/*.sqlite3
-/db/*.sqlite3-journal
-.gitignore
-db.sqlite3
+
 
 ### OSX ###
 .DS_Store
