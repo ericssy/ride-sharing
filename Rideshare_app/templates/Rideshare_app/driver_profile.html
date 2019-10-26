@@ -1,12 +1,34 @@
 <html>
 <head>
-  <title>{{driver.first_name}}</title>
+  <h1> Hi, {{driver.first_name}}! </h1>
+  <p> You are signed up as a driver </p>
+  <p> <a href=" {% url 'post_ride_driver' driver.id%}">Post a New Ride</a> </p>
 </head>
 
+
 <body>
-  <h1> Hi, {{driver.first_name}}! </h1>
-  <p> Your next trip is on {{ride.date}}, from {{ride.departure_location}} to {{ride.destination_location}} </p>
-  <a href=" {% url 'ride' ride.id%}"> Check your ride to {{ride.destination_location}} </a>
+  <p> You have {{upcoming_rides_list.count}} upcoming trips </p>
+  <ul>
+  {% for ride in upcoming_rides_list %}
+  <li>
+    <p>Your next trip is on {{ride.date}}, from {{ride.departure_location}} to {{ride.destination_location}}.
+    <a href=" {% url 'ride' ride.id%}"> Check your ride to {{ride.destination_location}} </a>
+    </p>
+  </li>
+  {% endfor %}
+  </ul>
+
+  <p> You have {{past_rides.count}} past trips </p>
+  <ul>
+  {% for ride in past_rides %}
+  <li>
+    <p> Trip on {{ride.date}}, from {{ride.departure_location}} to {{ride.destination_location}}.
+    <a href=" {% url 'ride' ride.id%}"> Check your ride to {{ride.destination_location}} </a>
+    </p>
+  </li>
+  {% endfor %}
+  </ul>
+
 </body>
 
 
