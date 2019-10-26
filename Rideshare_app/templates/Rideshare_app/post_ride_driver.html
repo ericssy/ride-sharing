@@ -1,0 +1,30 @@
+<html>
+
+<head>
+  <h1> Hi, {{driver.first_name}}! </h1>
+  <p> Post Your New Ride Here </p>
+</head>
+<form  method="post">
+  {% csrf_token %}
+  <table>
+   {{form.as_table}}
+ </table>
+  <button type="submit" class="btn btn-success">Submit</button>
+</form>
+
+<!--
+<form action="/your-name/" method="post">
+    <label for="your_name">Your name: </label>
+    <input id="your_name" type="text" name="your_name" value="{{ current_name }}">
+    <input type="submit" value="OK">
+</form>
+
+<form action="/your-name/" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit">
+</form>
+-->
+
+
+</html>
