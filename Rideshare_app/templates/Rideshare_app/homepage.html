@@ -5,14 +5,54 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+    #topbar {
+      text-align: center;
+      background-image: linear-gradient(to right, rgb(219, 113, 0), rgb(255, 132, 0));
+    }
+    #loginbutton {
+        text-align: left;
+    }
+    #profilebutton {
+        text-align: right;
+    }
+    #header {
+      text-align: center;
+      background-image: linear-gradient(to right, rgb(255, 132, 0), rgb(219, 113, 0));
+      <!––background-color: rgb(4, 23, 133); NAVY BLUE––>
+      <!––background-color: rgb(255, 132, 0); ORANGE––>
+      font-family: Impact, Charcoal, sans-serif;
+      color: white;
+    }
+    #toFrom {
+        background-color: rgb(4, 23, 133);
+        color: white;
+        padding: 20px;
+    }
+    </style>
 </head>
-<body>
 
-<h2>Welcome to CavPool!</h2>
-<b></b>
-<a href="{% provider_login_url "google" %}"> Login </a>
-<b></b>
-<a>Create an Account</a>
-
+<body color="blue">
+    <div id="topbar">
+        <div id=loginbutton>
+            <a href="{% provider_login_url "google" %}"> Login </a>
+        </div>
+        <div id=profilebutton>
+            <a href="https://project-103-letsgitit.herokuapp.com/1/driver_profile"> Profile </a>
+        </div>
+    </div>
+    <div id="header">
+        <h2>CavPool</h2>
+    </div>
+    <form action="/search">
+        <div id="toFrom">
+            I am going TO: <input type="text" name="to" value="charlottesville"><br>
+        </div>
+        <div id="toFrom">
+            I am going FROM: <input type="text" name="from" value="charlottesville"><br>
+        </div>
+        <input type="submit" value="Submit">
+        <div id=""
+    </form>
 </body>
 </html>
