@@ -5,5 +5,5 @@ from django.urls import resolve
 
 class RoutesTestCase(unittest.TestCase):
     def test_drivers_routes(self):
-        resolver = resolve('/login2/')
+        resolver = resolve('/login/')
         self.assertEqual(resolver.view_name, 'django.views.generic.base.TemplateView')
