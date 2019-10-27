@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 {% load socialaccount %}
 {% providers_media_js %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -16,6 +18,9 @@
     #profilebutton {
         text-align: right;
     }
+    #topset {
+        font-size: 0;
+    }
     #header {
       text-align: center;
       background-image: linear-gradient(to right, rgb(255, 132, 0), rgb(219, 113, 0));
@@ -28,22 +33,25 @@
         background-color: rgb(4, 23, 133);
         color: white;
         padding: 20px;
+        b
     }
     </style>
 </head>
 
-<body color="blue">
-    <div id="topbar">
-        <div id=loginbutton>
-            <a href="{% provider_login_url "google" %}"> Login </a>
+<body style="background-color:rgb(4, 23, 133);">
+        <nav class="navbar navbar-expand-sm navbar-light" style="background-image:linear-gradient(to right, rgb(219, 113, 0), rgb(255, 132, 0)">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% provider_login_url "google" %}"> Login </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://project-103-letsgitit.herokuapp.com/1/driver_profile"> Profile </a>
+                </li>
+              </ul>
+        </nav>
+        <div id="header">
+            <h2>CavPool</h2>
         </div>
-        <div id=profilebutton>
-            <a href="https://project-103-letsgitit.herokuapp.com/1/driver_profile"> Profile </a>
-        </div>
-    </div>
-    <div id="header">
-        <h2>CavPool</h2>
-    </div>
     <form action="/search">
         <div id="toFrom">
             I am going TO: <input type="text" name="to" value="charlottesville"><br>
