@@ -7,9 +7,8 @@ script:
 - python manage.py test
 deploy:
   provider: heroku
-  api_key: 
+  api_key:
     secure: "cdd34d91-cffa-4d22-9156-3575f3a8c078"
-  app: Rideshare_app
   on:
     repo: uva-cs3240-f19/project-103-letsgitit
     branch: master
