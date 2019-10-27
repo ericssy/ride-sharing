@@ -2,7 +2,5 @@
 <ul>
 {% for ride in upcoming_rides_list %}
     <li><a href="{% url 'ride' ride.id%}">Ride from {{ride.departure_location}} to {{ride.destination_location}} on {{ride.date}}</a></li>
-{% empty %}
-    <li>No rides yet.</li>
 {% endfor %}
 </ul>
