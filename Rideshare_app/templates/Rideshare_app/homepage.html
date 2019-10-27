@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+{% load socialaccount %}
+{% providers_media_js %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,7 +10,7 @@
 
 <h2>Welcome to CavPool!</h2>
 <b></b>
-<a>Login</a>
+<a href="{% provider_login_url "google" %}"> Login </a>
 <b></b>
 <a>Create an Account</a>
 
