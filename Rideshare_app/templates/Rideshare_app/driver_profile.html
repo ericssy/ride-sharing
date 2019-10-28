@@ -1,33 +1,75 @@
 <html>
+{% load bootstrap4 %}
+{% bootstrap_css %}
 <head>
-  <h1> Hi, {{driver.first_name}}! </h1>
-  <p> You are signed up as a driver </p>
-  <p> <a href=" {% url 'post_ride_driver' driver.id%}">Post a New Ride</a> </p>
+  <nav class="navbar navbar-dark" style="background-color: #232D4B">
+	<ul class="navbar-nav">
+		<li class="nav-item active">
+			<a class="nav-link" href="{% url 'index' %}">Homepage</a>
+		</li>
+	</ul>
+</nav>
+<div class="jumbotron jumbotron-fluid">
+	<div class="container">
+	   <h1 style = "text-align: center; color:orange"> Hi, {{driver.first_name}}! </h1>
+     <p style = "text-align: center"> You are signed up as a driver </p>
+	</div>
+</div>
+<div style ="text-align: center" >
+  <a href="{% url 'post_ride_driver' driver.id%}">
+    <button class="btn btn-primary" >Post a New Ride</button>
+</a>
+</div>
+
 </head>
 
 
 <body>
-  <p> You have {{upcoming_rides_list.count}} upcoming trips </p>
-  <ul>
-  {% for ride in upcoming_rides_list %}
-  <li>
-    <p>Your next trip is on {{ride.date}}, from {{ride.departure_location}} to {{ride.destination_location}}.
-    <a href=" {% url 'ride' ride.id%}"> Check your ride to {{ride.destination_location}} </a>
-    </p>
-  </li>
-  {% endfor %}
-  </ul>
+  <h3 style = "padding-top:20;color: orange"> You have {{upcoming_rides_list.count}} upcoming trips </h3>
+  <br>
+  <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Date</th>
+      <th scope="col">Depature Location</th>
+      <th scope="col">Destination Location</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+      {% for ride in upcoming_rides_list %}
+        <tr>
+      <td>{{ride.date}}</td>
+      <td>{{ride.departure_location}}</td>
+      <td>{{ride.destination_location}}</td>
+      <td><a href=" {% url 'ride' ride.id%}"> Check this ride</a></td>
+      </tr>
+      {% endfor %}
+  </tbody>
+</table>
+<br>
+  <h3 style = "color: orange"> You have {{past_rides.count}} past trips </h3> <br>
+  <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Date</th>
+      <th scope="col">Depature Location</th>
+      <th scope="col">Destination Location</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+      {% for ride in past_rides%}
+        <tr>
+      <td>{{ride.date}}</td>
+      <td>{{ride.departure_location}}</td>
+      <td>{{ride.destination_location}}</td>
+      <td><a href=" {% url 'ride' ride.id%}"> Check this ride</a></td>
+      </tr>
+      {% endfor %}
+  </tbody>
+</table>
 
-  <p> You have {{past_rides.count}} past trips </p>
-  <ul>
-  {% for ride in past_rides %}
-  <li>
-    <p> Trip on {{ride.date}}, from {{ride.departure_location}} to {{ride.destination_location}}.
-    <a href=" {% url 'ride' ride.id%}"> Check your ride to {{ride.destination_location}} </a>
-    </p>
-  </li>
-  {% endfor %}
-  </ul>
 
 </body>
 
