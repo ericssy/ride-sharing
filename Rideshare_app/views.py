@@ -61,7 +61,7 @@ def post_ride_driver_result(request, driver_id):
 class RidesListView(generic.ListView):
     template_name = 'Rideshare_app/upcoming_rides_list.html'
     context_object_name = 'upcoming_rides_list'
-    paginate_by = 10
+
 
     def get_queryset(self):
         # return all the upcoming trips
