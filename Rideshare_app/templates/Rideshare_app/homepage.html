@@ -8,19 +8,6 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
-    #topbar {
-      text-align: center;
-      background-image: linear-gradient(to right, rgb(219, 113, 0), rgb(255, 132, 0));
-    }
-    #loginbutton {
-        text-align: left;
-    }
-    #profilebutton {
-        text-align: right;
-    }
-    #topset {
-        font-size: 0;
-    }
     #header {
       text-align: center;
       background-image: linear-gradient(to right, rgb(255, 132, 0), rgb(219, 113, 0));
@@ -29,11 +16,10 @@
       font-family: Impact, Charcoal, sans-serif;
       color: white;
     }
-    #toFrom {
+    .toFrom {
         background-color: rgb(4, 23, 133);
         color: white;
         padding: 20px;
-        b
     }
     </style>
 </head>
@@ -53,13 +39,13 @@
             <h2>CavPool</h2>
         </div>
     <form action="/search">
-        <div id="toFrom">
+        <div class="toFrom">
             I am going TO: <input type="text" name="to" value="charlottesville"><br>
         </div>
-        <div id="toFrom">
+        <div class="toFrom">
             I am going FROM: <input type="text" name="from" value="charlottesville"><br>
         </div>
-        <div id="toFrom">
+        <div class="toFrom">
             Date Leaving: <input type="date" name="dateLeaving">
         </div>
         <input type="submit" value="Submit">
