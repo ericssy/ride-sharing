@@ -12,7 +12,10 @@ def index(request):
     return render(request, 'Rideshare_app/homepage.html')
 
 def search(request):
-    rides_list = Ride.objects.filter(date__gte = timezone.now())
+    to_location = request.GET.get('to', None)
+    from_location = request.GET.get('from', None)
+    date = request.GET.get('date', None)
+    rides_list = Ride.objects.filter(departure_location = to_location, destination_location = from_location, date__gte = date)
     context = {"rides_list" : rides_list}
     return render(request, 'Rideshare_app/search.html', context)
 
