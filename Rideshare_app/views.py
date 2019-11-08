@@ -19,6 +19,10 @@ def login(request):
 
 def rider_profile(request, rider_id):
     rider = get_object_or_404(Rider, pk = rider_id)
+
+
+    ride = Ride.objects.filter(riders = rider_id, date__gte = timezone.now())
+    # use for loops
     context = {"rider" : rider, "ride" : ride}
     return render(request, 'Rideshare_app/rider_profile.html', context)
 
@@ -30,8 +34,11 @@ def driver_profile(request, driver_id):
                 "past_rides" : past_rides}
     return render(request, 'Rideshare_app/driver_profile.html', context)
 
+
+
 def ride(request, id):
     ride = get_object_or_404(Ride, pk = id)
+
     context = {"ride" : ride}
     return render(request, 'Rideshare_app/ride.html', context)
 
@@ -61,8 +68,6 @@ def post_ride_driver_result(request, driver_id):
 class RidesListView(generic.ListView):
     template_name = 'Rideshare_app/upcoming_rides_list.html'
     context_object_name = 'upcoming_rides_list'
-
-
     def get_queryset(self):
         # return all the upcoming trips
         return Ride.objects.filter(date__gte = timezone.now(), driver__isnull = False)
