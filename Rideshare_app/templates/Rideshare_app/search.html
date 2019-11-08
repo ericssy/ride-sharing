@@ -95,10 +95,22 @@
 			</ul>
 		</nav>
 	</div>
-	<div class="col-sm-10">
-		<div class="card">
-		  <div class="card-body">Basic card</div>
-		</div>
+	<div class="col-sm-10 row">
+		{% for ride in rides_list %}
+			<div class="col-sm-6">
+				<div class="card">
+					<div class="card-header">Driver: {{ride.driver}}</div>
+					<ul class="list-group list-group-flush">
+					    <li class="list-group-item">Departure: {{ride.departure_location}}</li>
+					    <li class="list-group-item">Destination: {{ride.destination_location}}</li>
+					    <li class="list-group-item">Date: {{ride.date}}</li>
+					</ul>
+					<div class="card-body">
+						<a href=" {% url 'ride' ride.id%}" class="btn btn-primary">Details</a>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
 	</div>
 </div>
 </body>

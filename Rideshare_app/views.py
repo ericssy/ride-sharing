@@ -12,7 +12,9 @@ def index(request):
     return render(request, 'Rideshare_app/homepage.html')
 
 def search(request):
-	return render(request, 'Rideshare_app/search.html')
+    rides_list = Ride.objects.filter(date__gte = timezone.now())
+    context = {"rides_list" : rides_list}
+    return render(request, 'Rideshare_app/search.html', context)
 
 def login(request):
 	return HttpResponse("Display login!")
