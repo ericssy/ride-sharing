@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+{% load socialaccount %}
+{% providers_media_js %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+    #header {
+      text-align: center;
+      background-image: linear-gradient(to right, rgb(255, 132, 0), rgb(219, 113, 0));
+      <!––background-color: rgb(4, 23, 133); NAVY BLUE––>
+      <!––background-color: rgb(255, 132, 0); ORANGE––>
+      font-family: Impact, Charcoal, sans-serif;
+      color: white;
+    }
+    .toFrom {
+        background-color: rgb(4, 23, 133);
+        color: white;
+        padding: 20px;
+    }
+    </style>
+</head>
+
+<body style="background-color:rgb(4, 23, 133);">
+        <nav class="navbar navbar-expand-sm navbar-light" style="background-image:linear-gradient(to right, rgb(219, 113, 0), rgb(255, 132, 0)">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% provider_login_url "google" %}"> Login </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://project-103-letsgitit.herokuapp.com/1/driver_profile"> Profile </a>
+                </li>
+              </ul>
+        </nav>
+        <div id="header">
+            <h2>CavPool</h2>
+        </div>
+    <form action="/search">
+        <div class="toFrom">
+            I am going TO: <input type="text" name="to" value="charlottesville"><br>
+        </div>
+        <div class="toFrom">
+            I am going FROM: <input type="text" name="from" value="charlottesville"><br>
+        </div>
+        <div class="toFrom">
+            Date Leaving: <input type="date" name="dateLeaving">
+        </div>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

@@ -1,0 +1,66 @@
+html,
+body,
+header,
+
+.column {
+  float: left;
+  width: 30%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
+
+
+
+<body>
+  <h3 style = "padding-top:20;color: orange"> You have {{upcoming_rides_list.count}} upcoming trips </h3>
+  <br>
+  <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Date</th>
+      <th scope="col">Depature Location</th>
+      <th scope="col">Destination Location</th>
+      <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+      {% for ride in upcoming_rides_list %}
+        <tr>
+      <td>{{ride.date}}</td>
+      <td>{{ride.departure_location}}</td>
+      <td>{{ride.destination_location}}</td>
+      <td><a href=" {% url 'ride' ride.id%}"> Check this ride</a></td>
+      </tr>
+      {% endfor %}
+  </tbody>
+</table>
+<br>
+  <h3 style = "color: orange"> You have {{past_rides.count}} past trips </h3> <br>
+  <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Date</th>
+      <th scope="col">Depature Location</th>
+      <th scope="col">Destination Location</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+      {% for ride in past_rides%}
+        <tr>
+      <td>{{ride.date}}</td>
+      <td>{{ride.departure_location}}</td>
+      <td>{{ride.destination_location}}</td>
+      <td><a href=" {% url 'ride' ride.id%}"> Check this ride</a></td>
+      </tr>
+      {% endfor %}
+  </tbody>
+</table>
+
