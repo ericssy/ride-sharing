@@ -3,7 +3,22 @@
 
 <body>
   <h1> Ride from {{ride.departure_location}} to {{ride.destination_location}}  </h1>
-  <p> {{ride.date}}</p>
+  <p> {{ride.date}}, {{ride.time}}</p>
+  <p> Driver: {{ride.driver}} </p>
+  <p> Available Seats : {{ride.seats}}</p>
+  <p> Confirmed Riders :  {{ride.confirmed_riders}} </p>
+  <tbody>
+    {% for rider in pending_riders%}
+      <tr>
+    <td>{{rider.first_name}}</td>
+    </tr>
+    {% endfor %}
+  <tbody/>
+
+
+
+
+
 </body>
 
 
