@@ -6,14 +6,25 @@
   <p> {{ride.date}}, {{ride.time}}</p>
   <p> Driver: {{ride.driver}} </p>
   <p> Available Seats : {{ride.seats}}</p>
-  <p> Confirmed Riders :  {{ride.confirmed_riders}} </p>
+
   <tbody>
+    Pending Riders:
     {% for rider in pending_riders%}
       <tr>
     <td>{{rider.first_name}}</td>
     </tr>
     {% endfor %}
   <tbody/>
+
+  
+  <form method="post">
+    {% csrf_token %}
+    <table>
+     {{form.as_table}}
+   </table>
+    <button type="submit" class="btn btn-success">Request the Ride Here</button>
+  </form>
+
 
 
 

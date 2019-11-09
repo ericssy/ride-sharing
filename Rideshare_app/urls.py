@@ -16,4 +16,5 @@ urlpatterns = [
     path('rides', RidesListView.as_view(), name = "upcoming_rides_list"),
     path('<int:driver_id>/driver_profile/post_a_ride', views.post_ride_driver, name = "post_ride_driver"),
     path('<int:driver_id>/driver_profile/post_a_ride/success', views.post_ride_driver_result, name = "post_ride_driver_result"),
+    path('<int:id>/ride/request_ride_result', views.request_ride_result, name = "request_ride_result"),
 ]

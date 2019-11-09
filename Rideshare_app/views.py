@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from django.views.generic.list import ListView
-from .forms import PostRideAsDriverForm
+from .forms import PostRideAsDriverForm, RequestRideForm
 from django.http import HttpResponse, HttpResponseRedirect
 
 def index(request):
@@ -16,6 +16,15 @@ def search(request):
 
 def login(request):
 	return HttpResponse("Display login!")
+
+def getPendingRidersFromRide(rider_id):
+    all_rides = Rider.objects.all()
+    ride_ids = []
+    for ride in all_rides:
+        if ride.pending_riders.filter(pk = rider_id).exists():
+            ride_ids.append(ride.id)
+    return ride_ids
+
 
 def rider_profile(request, rider_id):
     rider = get_object_or_404(Rider, pk = rider_id)
@@ -35,11 +44,20 @@ def driver_profile(request, driver_id):
     return render(request, 'Rideshare_app/driver_profile.html', context)
 
 
-
 def ride(request, id):
     ride = get_object_or_404(Ride, pk = id)
-
-    context = {"ride" : ride}
+    if request.method == "POST":
+        form = RequestRideForm(request.POST)
+        if form.is_valid() == True:
+            rider = Rider.objects.get(pk= 1)
+            ride.pending_riders.add(rider)
+            # need to add if statements to determine if the car if full
+            return HttpResponseRedirect(reverse('request_ride_result', args=(id,))) # here id refers to ride id
+            #return render(request, 'Rideshare_app/post_ride_driver.html', {"form" : form, "driver" : driver})
+    else:
+        form = RequestRideForm()
+    pending_riders = ride.pending_riders.all()
+    context = {"ride" : ride, "pending_riders" : pending_riders}
     return render(request, 'Rideshare_app/ride.html', context)
 
 def post_ride_driver(request, driver_id):
@@ -63,6 +81,12 @@ def post_ride_driver_result(request, driver_id):
     #url = "/" + str(driver_id) + "/driver_profile"
     context = {"driver" : driver,  "driver_id" : driver_id}
     return render(request, 'Rideshare_app/post_ride_driver_result.html', context)
+
+def request_ride_result(request, id):
+    ride = get_object_or_404(Ride, pk = id)
+    context = {"ride" : ride}
+    return render(request, 'Rideshare_app/request_ride_result.html', context)
+
 
 
 class RidesListView(generic.ListView):
