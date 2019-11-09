@@ -2,6 +2,8 @@ from django.db import models
 from django.forms import ModelForm
 # Create your models here.
 
+
+
 class Rider(models.Model):
     first_name = models.CharField(max_length = 30)
     last_name = models.CharField(max_length = 30)
@@ -22,6 +24,16 @@ class Driver(models.Model):
     def __str__(self):
         return self.first_name + " " + self.last_name;
 
+class User(models.Model):
+    first_name = models.CharField(max_length = 30)
+    last_name = models.CharField(max_length = 30)
+    email = models.CharField(max_length = 100)
+    venmo = models.CharField(max_length = 30, blank = True, null = True)
+    phone_number = models.CharField(max_length = 20, blank = True, null = True)
+    driver = models.ForeignKey(Driver, null = True, on_delete = models.CASCADE)
+    rider = models.ForeignKey(Rider, null = True, on_delete = models.CASCADE)
+    def __str__(self):
+        return self.first_name + " " + self.last_name;
 
 class Ride(models.Model):
     departure_location = models.CharField(max_length = 30)
