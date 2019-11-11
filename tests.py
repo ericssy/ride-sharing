@@ -19,6 +19,20 @@ class RideTestCase1(TestCase):
         self.assertEqual(RidePrice,15)
         self.assertEqual(RideDriver, "Deepak")
 
+class RideTestCase2(TestCase):
+    def setUp(self):
+        Driver.objects.create(first_name="Shubhi", last_name= "Maheshwari", email = "smv9t@virginia.edu", venmo = "ShubhiM", phone_number = "703456789", car_make = "Honda", car_model = "Accord")
+        Driver1 = Driver.objects.get(email = "smv9t@virginia.edu")
+        Ride.objects.create(departure_location = "UVA", destination_location = "New York City", departure_state = "Virginia", destination_state = "New york", date = timezone.now(), time = timezone.now().time(), seats = 4, price = 30, driver = Driver1)
+
+    def test_user(self):
+        Ride1 = Ride.objects.get(departure_location = "UVA")
+        RideSeats = Ride1.seats
+        RideDestination = Ride1.destination_location
+        self.assertEqual(RideSeats,4)
+        self.assertEqual(RideDestination, "New York City")
+
+
 
 class UserTestCase1(TestCase):
     def setUp(self):
