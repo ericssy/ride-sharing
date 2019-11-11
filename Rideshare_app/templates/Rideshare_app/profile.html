@@ -60,7 +60,9 @@
     <div class="card">
       <div class="card-body">
         <body>
-  <h3 style = "padding-top:20;color: #103F69"> Upcoming Trips </h3>
+
+
+  <h3 style = "padding-top:20;color: #103F69"> Confirmed Trips </h3>
   <br>
   <table class="table">
   <thead>
@@ -71,18 +73,44 @@
       <th scope="col">Status</th>
     </tr>
   </thead>
+
   <tbody>
-      {% for ride in upcoming_rides_list %}
+      {% for ride in pending_rides_list %}
         <tr>
       <td>{{ride.date}}</td>
       <td>{{ride.departure_location}}</td>
       <td>{{ride.destination_location}}</td>
-      <td><a href=" {% url 'ride' ride.id%}"> Check this ride</a></td>
+      <td><a href=" {% url 'ride' ride.id%}"> Check this ride </a></td>
       </tr>
       {% endfor %}
   </tbody>
 </table>
 <br>
+<h3 style = "padding-top:20;color: #103F69"> Pending Trips </h3>
+<br>
+<table class="table">
+<thead>
+  <tr>
+    <th scope="col">Date</th>
+    <th scope="col">Origin</th>
+    <th scope="col">Destination</th>
+    <th scope="col">Status</th>
+  </tr>
+</thead>
+
+<tbody>
+    {% for ride in pending_rides_list %}
+      <tr>
+    <td>{{ride.date}}</td>
+    <td>{{ride.departure_location}}</td>
+    <td>{{ride.destination_location}}</td>
+    <td><a href=" {% url 'ride' ride.id%}"> Check this ride </a></td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+<br>
+
   <h3 style = "color: #103F69"> Past Trips </h3> <br>
   <table class="table">
   <thead>
@@ -94,7 +122,7 @@
     </tr>
   </thead>
   <tbody>
-      {% for ride in past_rides%}
+      {%for ride in past_rides%}
         <tr>
       <td>{{ride.date}}</td>
       <td>{{ride.departure_location}}</td>
@@ -149,7 +177,7 @@
     </tr>
   </thead>
   <tbody>
-      {% for ride in past_rides%}
+      {% for ride in past_rides %}
         <tr>
       <td>{{ride.date}}</td>
       <td>{{ride.departure_location}}</td>
