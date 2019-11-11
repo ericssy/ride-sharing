@@ -25,9 +25,3 @@ urlpatterns = [
     path('', include('Rideshare_app.urls')),
     path('login/', TemplateView.as_view(template_name="Rideshare_app/login.html")),
 ]
-
-'''
-<<<<<<< HEAD
-    path('login2/', TemplateView.as_view(template_name="Rideshare_app/login.html")),
-=======
-'''

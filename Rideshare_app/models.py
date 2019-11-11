@@ -45,6 +45,7 @@ class Ride(models.Model):
     date = models.DateField()
     time = models.TimeField(blank = True, null = True)
     seats = models.IntegerField(null = True, blank = True)
+    price = models.IntegerField(null = True, blank = True)
     # each ride links to only one driver
     driver = models.ForeignKey(Driver, null = True, on_delete = models.CASCADE)
     riders = models.ManyToManyField(Rider, blank = True)

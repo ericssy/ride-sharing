@@ -48,7 +48,6 @@ body, html {
 </style>
 </head>
 <body>
-
             <!-- Mask & flexbox options-->
             <div class="mask rgba-gradient align-items-center">
               <!-- Content -->
@@ -79,42 +78,18 @@ body, html {
                           <hr class="hr-light">
                         </div>
                         <!--Body-->
-                        <div class="md-form">
-                          <label for="form3" class="active">Looking for a Ride From:</label>
-                          <i class="fas fa-user prefix white-text active"></i>
-                          <input type="text" id="form3" class="white-text form-control">
-                        </div>
-                        <div>
-                          <h3 style = "padding-top:20";> </h3>
-                        </div>
-                        <div class="md-form">
-                          <label for="form2" class="active">To:</label>
-                          <i class="fas fa-envelope prefix white-text active"></i>
-                          <input type="text" id="form2" class="white-text form-control">
-                        </div>
-                        <div>
-                          <h3 style = "padding-top:20";> </h3>
-                        </div>
-                        <div class="md-form">
-                        <label for="form3" class = "active">Date Leaving:</label>
-                          <i class="fas fa-lock prefix white-text active"></i>
-                          <input type="date" id ="form3" class="white-text form-control" name="dateLeaving"> 
-                        </div>
-                        <div class="text-center mt-4">
-                          <input class="btn btn-primary" type="submit" value="Search">
-                          <hr class="hr-light mb-3 mt-4">
-                          <div class="inline-ul text-center">
-                            <a class="p-2 m-2 tw-ic">
-                              <i class="fab fa-twitter white-text"></i>
-                            </a>
-                            <a class="p-2 m-2 li-ic">
-                              <i class="fab fa-linkedin-in white-text"> </i>
-                            </a>
-                            <a class="p-2 m-2 ins-ic">
-                              <i class="fas fa-instagram white-text"> </i>
-                            </a>
-                          </div>
-                        </div>
+                        <form action="/search" method="get">
+                            Departure City: <br>
+                            <input type="text" name="filter_departure_city" class="white-text form-control"><br>
+                            Destination City: <br>
+                            <input type="text" name="filter_destination_city" class="white-text form-control"><br>
+                            Date Leaving: <br>
+                            <input type="date" name="filter_date" class="white-text form-control">
+                            <div class="text-center mt-4">
+                              <input class="btn btn-primary" type="submit" value="Search">
+                            </div>
+                            <hr class="hr-light mb-3 mt-4">
+                        </form>
                       </div>
                     </div>
                     <!--/.Form-->
@@ -129,9 +104,6 @@ body, html {
           </div>
 </head>
 <body>
-
-
-
 </div>
 </body>
 </html>
