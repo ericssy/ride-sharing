@@ -19,3 +19,9 @@ class PostRideAsDriverForm(forms.Form):
 
 class RequestRideForm(forms.Form):
     widgets = {'any_field': HiddenInput(),}
+
+class SignUpForm(ModelForm):
+
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'email', 'venmo', 'phone_number', )
