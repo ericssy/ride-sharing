@@ -1,0 +1,17 @@
+html,
+body,
+header,
+.cards {
+  display: flex;
+}
+
+.card {
+  width: 33.33%;
+  color: #fff;
+  text-align: center;
+}
+
+.card p {
+  min-height: 80px;
+  padding: 0 39px 0 39px;
+}
