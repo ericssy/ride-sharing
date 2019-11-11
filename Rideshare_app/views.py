@@ -12,11 +12,17 @@ def index(request):
     return render(request, 'Rideshare_app/homepage.html')
 
 def search(request):
-    to_location = request.GET.get('to', None)
-    from_location = request.GET.get('from', None)
-    date = request.GET.get('date', None)
-    rides_list = Ride.objects.filter(departure_location = to_location, destination_location = from_location, date__gte = date)
-    context = {"rides_list" : rides_list}
+    to_location = request.GET.get('filter_destination_city', '')
+    from_location = request.GET.get('filter_origin_city', '')
+    date = request.GET.get('filter_date', timezone.now())
+    rides_list = Ride.objects.filter(departure_location__iexact = to_location, destination_location__iexact = from_location, date__gte = date)
+
+
+    avail_to_cities = Ride.objects.all().values('destination_location').distinct()
+    for i in avail_to_cities:
+        i['destination_location']
+
+    context = {"rides_list" : rides_list, "avail_to_cities" : avail_to_cities}
     return render(request, 'Rideshare_app/search.html', context)
 
 def login(request):
