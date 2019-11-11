@@ -42,14 +42,28 @@ def search(request):
     return render(request, 'Rideshare_app/search.html', context)
 
 def login(request):
+        # first_name = form.cleaned_data["first_name"]
+        # last_name = form.cleaned_data["last_name"]
+        # email = form.cleaned_data["email"]
+        # venmo = form.cleaned_data["venmo"]
+        # phone_number = form.cleaned_data["phone_number"]
+        #User.objects.create(first_name = first_name, last_name = last_name, email = email, venmo = venmo, phone_number = phone_number)
+    if request.method == "POST":
         form = SignUpForm(request.POST)
-        first_name = form.cleaned_data["first_name"]
-        last_name = form.cleaned_data["last_name"]
-        email = form.cleaned_data["email"]
-        venmo = form.cleaned_data["venmo"]
-        phone_number = form.cleaned_data["phone_number"]
-        User.objects.create(first_name = first_name, last_name = last_name, email = email, venmo = venmo, phone_number = phone_number)
-        return render(request, 'Rideshare_app/sign_up_form.html', {"form" : form, "user" : users})
+        if form.is_valid() == True:
+            first_name = form.cleaned_data["first_name"]
+            last_name = form.cleaned_data["last_name"]
+            email = form.cleaned_data["email"]
+            venmo = form.cleaned_data["venmo"]
+            phone_number = form.cleaned_data["phone_number"]
+            Rider.objects.create(first_name = first_name, last_name = last_name, email = email, venmo = venmo, phone_number = phone_number)
+            Driver.objects.create(first_name = first_name, last_name = last_name, email = email, venmo = venmo, phone_number = phone_number)
+            Rider = Rider.objects.get(email=request.user.email)
+            Driver = Driver.objects.get(email=request.user.email)
+            User.objects.create(first_name = first_name, last_name = last_name, email = email, venmo = venmo, phone_number = phone_number, driver = driver, rider = rider)
+    else:
+        form = SignUpForm()
+    return render(request, 'Rideshare_app/sign_up_form.html', {"form" : form})
 
 def getPendingRides(rider_id):
     all_rides = Rider.objects.all()
