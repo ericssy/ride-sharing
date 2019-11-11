@@ -8,6 +8,7 @@ from django.views.generic.list import ListView
 from .forms import PostRideAsDriverForm, RequestRideForm
 from django.http import HttpResponse, HttpResponseRedirect
 
+
 def index(request):
     return render(request, 'Rideshare_app/homepage.html')
 
@@ -25,14 +26,14 @@ def getPendingRides(rider_id):
             ride_ids.append(ride.id)
     return ride_ids
 
-def getPendingRides_driver(driver_id, rider_id):
-    all_rides = Rider.objects.all()
-    request_dict = {}
+def addPendingRides_driver(driver_id, rider_id):
+    all_rides = Ride.objects.all()
+    driver = Driver.objects.filter(pk = driver_id).get()
     for ride in all_rides:
-        if ride.driver.driver_id == driver_id:
+        if ride.driver.id == driver_id:
             if ride.pending_riders.filter(pk = rider_id).exists():
-                request_dict[ride.id] = rider_id
-    return request_dict
+                driver.pending_rides.add(ride)
+    return 0
 
 
 def rider_profile(request, rider_id):
@@ -56,11 +57,14 @@ def profile(request, user_id):
     pending_ride_ids = getPendingRides(rider_id)
     pending_rides_list = Ride.objects.filter(pk__in = pending_ride_ids, date__gte = timezone.now())
 
+    pending_requests_for_driver = driver.pending_rides.all()
+    
 
 
     context = {"user" : user, "driver" : driver, "upcoming_rides_list" : upcoming_rides_list,
                 "past_rides" : past_rides, "rider" : rider,
-                "pending_rides_list" : pending_rides_list}
+                "pending_rides_list" : pending_rides_list,
+                "pending_requests_for_driver" : pending_requests_for_driver }
     return render(request, 'Rideshare_app/profile.html', context)
 
 
@@ -73,7 +77,9 @@ def ride(request, id):
             rider = Rider.objects.get(pk= 3)
             ride.pending_riders.add(rider)
             # need to add if statements to determine if the car if full
-            
+            driver_id = ride.driver.id
+            rider_id = rider.id
+            _ = addPendingRides_driver(driver_id, rider_id)
             return HttpResponseRedirect(reverse('request_ride_result', args=(id,))) # here id refers to ride id
             #return render(request, 'Rideshare_app/post_ride_driver.html', {"form" : form, "driver" : driver})
     else:

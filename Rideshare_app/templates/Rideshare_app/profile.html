@@ -48,6 +48,7 @@
 
 <br>
 <br>
+
 <p>  </p>
 <div class="row">
 
@@ -187,6 +188,32 @@
       {% endfor %}
   </tbody>
 </table>
+
+<h3 style = "padding-top:20;color: #103F69"> Pending Requests </h3>
+<br>
+<table class="table">
+<thead>
+  <tr>
+    <th scope="col">Date</th>
+    <th scope="col">Origin</th>
+    <th scope="col">Destination</th>
+    <th scope="col">Rider</th>
+
+  </tr>
+</thead>
+<tbody>
+    {% for ride in pending_requests_for_driver %}
+      <tr>
+    <td>{{ride.date}}</td>
+    <td>{{ride.departure_location}}</td>
+    <td>{{ride.destination_location}}</td>
+    <td><a href=" {% url 'ride' ride.id%}"> Accept the ride </a></td>
+
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+<br>
       </div>
     </div>
   </div>

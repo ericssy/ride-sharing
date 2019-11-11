@@ -22,7 +22,7 @@ class Driver(models.Model):
     phone_number = models.CharField(max_length = 20, blank = True, null = True)
     car_make = models.CharField(max_length = 30, blank = True, null = True)
     car_model = models.CharField(max_length = 30, blank = True, null = True)
-    #pending_rides = models.OneToManyField(Rider, blank = True)
+    pending_rides = models.ManyToManyField('Ride', blank = True, null = True,related_name = "confirmed_rides" )
     def __str__(self):
         return self.first_name + " " + self.last_name;
 
