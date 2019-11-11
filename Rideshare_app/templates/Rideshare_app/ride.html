@@ -47,18 +47,22 @@
         <h5 style ="text-align: left ;color: black"> Number of Seats Available: {{ride.seats}}</h5>
         <br>
         <img src="https://i.imgur.com/wk69iyi.png"class="img-thumbnail" alt="">
-      <br>
-      <br>
-      <h5 style ="text-align: left ;color: black"> Others Riding with You: {{ride.confirmed_riders}}</h5>
-     </div>
-     <form method="post">
-    {% csrf_token %}
-    <table>
-     {{form.as_table}}
-   </table>
-   <div style ="text-align: center" >
-    <button type="submit" class="btn btn-primary">Request the Ride Here</button>
-  </form>
+	    <br>
+	    <br>
+	    <h5 style ="text-align: left ;color: black"> Others Riding with You: 
+	    	{% for i in confirmed_riders %}
+				{{i.first_name}}
+			{% endfor %}
+		</h5>     
+	</div>
+    <form method="post">
+    	{% csrf_token %}
+    	<table>
+     		{{form.as_table}}
+   		</table>
+   		<div style ="text-align: center" >
+    	<button type="submit" class="btn btn-primary">Request the Ride Here</button>
+  	</form>
   </div>
 
 

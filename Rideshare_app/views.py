@@ -97,7 +97,7 @@ def ride(request, id):
     if request.method == "POST":
         form = RequestRideForm(request.POST)
         if form.is_valid() == True:
-            rider = Rider.objects.get(pk= 3)
+            rider = Rider.objects.get(pk=4)
             ride.pending_riders.add(rider)
             # need to add if statements to determine if the car if full
             
@@ -106,7 +106,8 @@ def ride(request, id):
     else:
         form = RequestRideForm()
     pending_riders = ride.pending_riders.all()
-    context = {"ride" : ride, "pending_riders" : pending_riders}
+    confirmed_riders = ride.confirmed_riders.all()
+    context = {"ride" : ride, "pending_riders" : pending_riders, "confirmed_riders" : confirmed_riders}
     return render(request, 'Rideshare_app/ride.html', context)
 
 def post_ride_driver(request, user_id):

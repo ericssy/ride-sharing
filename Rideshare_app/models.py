@@ -52,8 +52,3 @@ class Ride(models.Model):
     riders = models.ManyToManyField(Rider, blank = True)
     confirmed_riders = models.ManyToManyField(Rider, blank = True, related_name = "confirmed_riders")
     pending_riders = models.ManyToManyField(Rider, blank = True, related_name = "pending_riders")
-
-class PostRideAsDriverForm(ModelForm):
-    class Meta:
-        model = Ride
-        fields = ['date', "departure_location", "destination_location"]

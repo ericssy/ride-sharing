@@ -7,7 +7,7 @@ class PostRideAsDriverForm(ModelForm):
 
     class Meta:
         model = Ride
-        fields = ('date', "departure_location", "destination_location")
+        fields = ("departure_location", "departure_state", "destination_location", "destination_state", "date", "time", "seats", "price")
 
 class RequestRideForm(forms.Form):
     widgets = {'any_field': HiddenInput(),}
