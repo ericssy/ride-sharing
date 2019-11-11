@@ -48,7 +48,7 @@ def profile(request, user_id):
     pending_ride_ids = getPendingRides(rider_id)
     pending_rides_list = Ride.objects.filter(pk__in = pending_ride_ids, date__gte = timezone.now())
 
-    context = {"driver" : driver, "upcoming_rides_list" : upcoming_rides_list,
+    context = {"user" : user, "driver" : driver, "upcoming_rides_list" : upcoming_rides_list,
                 "past_rides" : past_rides, "rider" : rider,
                 "pending_rides_list" : pending_rides_list}
     return render(request, 'Rideshare_app/profile.html', context)
@@ -76,7 +76,7 @@ def post_ride_driver(request, user_id):
     user = get_object_or_404(User, pk = user_id)
     driver = user.driver
     driver_id = driver.id
-    context = {"driver" : driver}
+    context = {"driver" : driver, "user_id" : user_id}
     if request.method == "POST":
         form = PostRideAsDriverForm(request.POST)
         if form.is_valid() == True:
@@ -84,7 +84,7 @@ def post_ride_driver(request, user_id):
             date = form.cleaned_data["date"]
             destination_location = form.cleaned_data["destination_location"]
             Ride.objects.create(date = date, driver = driver, departure_location = departure_location, destination_location = destination_location)
-            return HttpResponseRedirect(reverse('post_ride_driver_result', args=(driver_id,)))
+            return HttpResponseRedirect(reverse('post_ride_driver_result', args=(user_id,)))
             #return render(request, 'Rideshare_app/post_ride_driver.html', {"form" : form, "driver" : driver})
     else:
         form = PostRideAsDriverForm()
@@ -95,7 +95,7 @@ def post_ride_driver_result(request, user_id):
     driver = user.driver
     driver_id = driver.id
     #url = "/" + str(driver_id) + "/driver_profile"
-    context = {"driver" : driver,  "driver_id" : driver_id, "user_id" : user_id}
+    context = {"driver" : driver,  "driver_id" : driver_id, "user" : user}
     return render(request, 'Rideshare_app/post_ride_driver_result.html', context)
 
 def request_ride_result(request, id):
