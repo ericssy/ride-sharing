@@ -12,17 +12,33 @@ def index(request):
     return render(request, 'Rideshare_app/homepage.html')
 
 def search(request):
-    to_location = request.GET.get('filter_destination_city', '')
-    from_location = request.GET.get('filter_origin_city', '')
-    date = request.GET.get('filter_date', timezone.now())
-    rides_list = Ride.objects.filter(departure_location__iexact = to_location, destination_location__iexact = from_location, date__gte = date)
-
+    rides_list = Ride.objects.all()
+    if request.GET.get('filter_departure_city'):
+        rides_list = rides_list.filter(departure_location__iexact = request.GET.get('filter_departure_city'))
+    if request.GET.get('filter_destination_city'):
+        rides_list = rides_list.filter(destination_location__iexact = request.GET.get('filter_destination_city'))
+    if request.GET.get('filter_date'):
+        rides_list = rides_list.filter(date__gte = request.GET.get('filter_date'))
+    else:
+        rides_list = rides_list.filter(date__gte = timezone.now())
+    filter_time = request.GET.get('filter_time')
+    if filter_time == "Morning":
+        rides_list = rides_list.filter(time__gte = "00:00:00", time__lte = "11:59:59")
+    if filter_time == "Afternoon":
+        rides_list = rides_list.filter(time__gte = "12:00:00", time__lte = "16:59:59")
+    if filter_time == "Evening":
+        rides_list = rides_list.filter(time__gte = "17:00:00", time__lte = "23:59:59")
+    if request.GET.get('filter_price'):
+        rides_list = rides_list.filter(price__lte = request.GET.get('filter_price'))
+    if request.GET.get('filter_seats'):
+        rides_list = rides_list.filter(seats__gte = request.GET.get('filter_seats'))
 
     avail_to_cities = Ride.objects.all().values('destination_location').distinct()
-    for i in avail_to_cities:
-        i['destination_location']
+    avail_from_cities = Ride.objects.all().values('departure_location').distinct()
+    avail_to_states = Ride.objects.all().values('destination_state').distinct()
+    avail_from_states = Ride.objects.all().values('departure_state').distinct()
 
-    context = {"rides_list" : rides_list, "avail_to_cities" : avail_to_cities}
+    context = {"rides_list" : rides_list, "avail_to_cities" : avail_to_cities, "avail_from_cities" : avail_from_cities, "avail_to_states" : avail_to_states, "avail_from_states" : avail_from_states}
     return render(request, 'Rideshare_app/search.html', context)
 
 def login(request):
