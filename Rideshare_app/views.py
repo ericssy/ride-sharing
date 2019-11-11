@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
-from .models import Ride, Rider, Driver
+from .models import Ride, Rider, Driver, User
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
@@ -17,13 +17,14 @@ def search(request):
 def login(request):
 	return HttpResponse("Display login!")
 
-def getPendingRidersFromRide(rider_id):
+def getPendingRides(rider_id):
     all_rides = Rider.objects.all()
     ride_ids = []
     for ride in all_rides:
         if ride.pending_riders.filter(pk = rider_id).exists():
             ride_ids.append(ride.id)
     return ride_ids
+
 
 
 def rider_profile(request, rider_id):
@@ -35,13 +36,23 @@ def rider_profile(request, rider_id):
     context = {"rider" : rider, "ride" : ride}
     return render(request, 'Rideshare_app/rider_profile.html', context)
 
-def driver_profile(request, driver_id):
-    driver = get_object_or_404(Driver, pk = driver_id)
+def profile(request, user_id):
+    user = get_object_or_404(User, pk = user_id)
+    driver = user.driver
+    rider = user.rider
+    driver_id = driver.id
+    rider_id = rider.id
     upcoming_rides_list = Ride.objects.filter(driver = driver_id, date__gte = timezone.now())
     past_rides = Ride.objects.filter(driver = driver_id, date__lt = timezone.now())
+
+    pending_ride_ids = getPendingRides(rider_id)
+    pending_rides_list = Ride.objects.filter(pk__in = pending_ride_ids, date__gte = timezone.now())
+
     context = {"driver" : driver, "upcoming_rides_list" : upcoming_rides_list,
-                "past_rides" : past_rides}
-    return render(request, 'Rideshare_app/driver_profile.html', context)
+                "past_rides" : past_rides, "rider" : rider,
+                "pending_rides_list" : pending_rides_list}
+    return render(request, 'Rideshare_app/profile.html', context)
+
 
 
 def ride(request, id):
@@ -49,9 +60,10 @@ def ride(request, id):
     if request.method == "POST":
         form = RequestRideForm(request.POST)
         if form.is_valid() == True:
-            rider = Rider.objects.get(pk= 1)
+            rider = Rider.objects.get(pk= 3)
             ride.pending_riders.add(rider)
             # need to add if statements to determine if the car if full
+
             return HttpResponseRedirect(reverse('request_ride_result', args=(id,))) # here id refers to ride id
             #return render(request, 'Rideshare_app/post_ride_driver.html', {"form" : form, "driver" : driver})
     else:
@@ -60,8 +72,10 @@ def ride(request, id):
     context = {"ride" : ride, "pending_riders" : pending_riders}
     return render(request, 'Rideshare_app/ride.html', context)
 
-def post_ride_driver(request, driver_id):
-    driver = get_object_or_404(Driver, pk = driver_id)
+def post_ride_driver(request, user_id):
+    user = get_object_or_404(User, pk = user_id)
+    driver = user.driver
+    driver_id = driver.id
     context = {"driver" : driver}
     if request.method == "POST":
         form = PostRideAsDriverForm(request.POST)
@@ -76,10 +90,12 @@ def post_ride_driver(request, driver_id):
         form = PostRideAsDriverForm()
     return render(request, 'Rideshare_app/post_ride_driver.html', {"form" : form, "driver" : driver})
 
-def post_ride_driver_result(request, driver_id):
-    driver = get_object_or_404(Driver, pk = driver_id)
+def post_ride_driver_result(request, user_id):
+    user = get_object_or_404(User, pk = user_id)
+    driver = user.driver
+    driver_id = driver.id
     #url = "/" + str(driver_id) + "/driver_profile"
-    context = {"driver" : driver,  "driver_id" : driver_id}
+    context = {"driver" : driver,  "driver_id" : driver_id, "user_id" : user_id}
     return render(request, 'Rideshare_app/post_ride_driver_result.html', context)
 
 def request_ride_result(request, id):
