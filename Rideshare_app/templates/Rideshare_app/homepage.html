@@ -24,6 +24,19 @@
   </div>
 </nav>
 
+<script>
+    function switchButton() {
+        var depC=document.getElementById("departureCity").value;
+        var desC=document.getElementById("destinationCity").value;
+        var dL=document.getElementById("dateLeaving").value;
+        if (depC.length >= 1 || desC.length >= 1 || dL.value) {
+            document.getElementById("searchButton").value = "Search";
+        }
+        else {
+            document.getElementById("searchButton").value = "Search All";
+        }
+    }
+</script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
@@ -79,13 +92,13 @@ body, html {
                         <!--Body-->
                         <form action="/search" method="get">
                             Departure City: <br>
-                            <input type="text" name="filter_departure_city" class="white-text form-control"><br>
+                            <input id="departureCity" type="text" name="filter_departure_city" class="white-text form-control" onkeydown="this.innerHTML = switchButton()"><br>
                             Destination City: <br>
-                            <input type="text" name="filter_destination_city" class="white-text form-control"><br>
+                            <input id="destinationCity" type="text" name="filter_destination_city" class="white-text form-control" onkeydown="this.innerHTML = switchButton()"><br>
                             Date Leaving: <br>
-                            <input type="date" name="filter_date" class="white-text form-control">
+                            <input id="dateLeaving"type="date" name="filter_date" class="white-text form-control" onkeydown="this.innerHTML = switchButton()" oncclick="this.innerHTML = switchButton()">
                             <div class="text-center mt-4">
-                              <input class="btn btn-primary" type="submit" value="Search">
+                              <input id="searchButton" class="btn btn-primary" type="submit" value="Search All">
                             </div>
                             <hr class="hr-light mb-3 mt-4">
                         </form>
