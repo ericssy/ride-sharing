@@ -4,6 +4,17 @@
 {% load bootstrap4 %}
 {% bootstrap_css %}
 <head>
+
+<script>
+  window.addEventListener("load", function(event) {
+    var today = new Date();
+    var dd = String(today.getDate());
+    var mm = String(today.getMonth()+1);
+    var yyyy = today.getFullYear();
+    document.getElementById("filter_date").value = yyyy+'-'+mm+'-'+dd;
+  })
+</script>
+
   <div class="bg">
 <link rel="stylesheet" type="text/css" href="homepage.css">
 <!-- Navbar -->
@@ -79,11 +90,11 @@ body, html {
                         <!--Body-->
                         <form action="/search" method="get">
                             Departure City: <br>
-                            <input type="text" name="filter_departure_city" class="white-text form-control"><br>
+                            <input type="text" name="filter_departure_city" class="white-text form-control" placeholder = "Any Departure City"><br>
                             Destination City: <br>
-                            <input type="text" name="filter_destination_city" class="white-text form-control"><br>
+                            <input type="text" name="filter_destination_city" class="white-text form-control" placeholder = "Any Destination City"><br>
                             Date Leaving: <br>
-                            <input type="date" name="filter_date" class="white-text form-control">
+                            <input type="date" id="filter_date" name="filter_date" class="white-text form-control" > 
                             <div class="text-center mt-4">
                               <input class="btn btn-primary" type="submit" value="Search">
                             </div>
