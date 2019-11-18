@@ -1,5 +1,43 @@
 <html>
-<p> Success </p>
-<p><a href="{% url 'profile' user.id %}">Go Back</a></p>
+{% load socialaccount %}
+{% providers_media_js %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+<head>
+<link rel="stylesheet" type="text/css" href="post_ride.css">
+<body style="background-color:#FFFFFF;">
+</body>
 
+<head>
+<link rel="stylesheet" type="text/css" href="profile.css">
+  <nav class="navbar navbar-dark" style="background-color:lightblue">
+  <a class="navbar-brand" href = "{% url 'index' %}">CavPool</a>
+  <ul class="navbar-nav">
+    <li class="nav-item active">
+      <a class="nav-link" href="{% url 'profile' 4 %}">Profile</a>
+    </li>
+      </ul>
+</nav>
+
+</head>
+
+<br>
+<br>
+<p>  <div style ="text-align: center"> <h1 style = "color: orange"> Success!  </h1></p> </div>
+<br>
+
+
+<!-- <div style ="text-align: center" >
+        <a href="https://www.google.com/maps/dir/?api=1&origin={{ride.departure_location}}+{{ride.departure_state}}&destination={{ride.destination_location}}+{{ride.destination_state}}">
+        <button class="btn btn-primary" >Map Your Route</button>
+      </a>
+    </div> -->
+  
+
+<br>
+<!-- <div style ="text-align: center" >
+        <a href="{% url 'search' %}">
+        <button class="btn btn-primary" >Continue Searching for Trips</button>
+      </a>
+    </div> -->
 </html>

@@ -146,6 +146,7 @@ def post_ride_driver(request, user_id):
     driver = user.driver
     driver_id = driver.id
     context = {"driver" : driver, "user_id" : user_id}
+    ride = ""
     if request.method == "POST":
         form = PostRideAsDriverForm(request.POST)
         if form.is_valid() == True:
@@ -158,12 +159,14 @@ def post_ride_driver(request, user_id):
             price = form.cleaned_data["price"]
             seats = form.cleaned_data["seats"]
 
-            Ride.objects.create(date = date, driver = driver, departure_location = departure_location, destination_location = destination_location, departure_state = departure_state, destination_state = destination_state, price = price, seats = seats)
+            ride = Ride(date = date, driver = driver, departure_location = departure_location, destination_location = destination_location, departure_state = departure_state, destination_state = destination_state, price = price, seats = seats)
+            ride.save()
+            # ride = Ride.objects.create(date = date, driver = driver, departure_location = departure_location, destination_location = destination_location, departure_state = departure_state, destination_state = destination_state, price = price, seats = seats)
             return HttpResponseRedirect(reverse('post_ride_driver_result', args=(user_id,)))
             #return render(request, 'Rideshare_app/post_ride_driver.html', {"form" : form, "driver" : driver})
     else:
         form = PostRideAsDriverForm()
-    return render(request, 'Rideshare_app/post_ride_driver.html', {"form" : form, "driver" : driver})
+    return render(request, 'Rideshare_app/post_ride_driver.html', {"form" : form, "driver" : driver, "ride" : ride})
 
 def post_ride_driver_result(request, user_id):
     user = get_object_or_404(User, pk = user_id)
