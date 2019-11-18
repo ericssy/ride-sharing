@@ -5,7 +5,7 @@
 {% bootstrap_css %}
 <head>
 <link rel="stylesheet" type="text/css" href="post_ride.css">
-<body style="background-color:#D4D9DE;">
+<body style="background-color:#FFFFFF;">
 </body>
 
 <head>
@@ -24,5 +24,22 @@
 <br>
 <br>
 
-<p> <h3 style = "text-align: center"> You've successfully requested the ride!  </h3></p>
+<p>  <div style ="text-align: center"> <h1 style = "color: orange"> You've successfully requested the ride!  </h1></p> </div>
+<br>
+
+
+<div style ="text-align: center" >
+        <a href="https://www.google.com/maps/dir/?api=1&origin={{ride.departure_location}}+{{ride.departure_state}}&destination={{ride.destination_location}}+{{ride.destination_state}}">
+        <button class="btn btn-primary" >Map Your Route</button>
+      </a>
+    </div>
+  
+
+<br>
+<div style ="text-align: center" >
+        <a href="{% url 'search' %}">
+        <button class="btn btn-primary" >Continue Searching for Trips</button>
+      </a>
+    </div>
+
 </html>
