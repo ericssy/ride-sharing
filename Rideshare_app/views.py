@@ -159,7 +159,7 @@ def post_ride_driver(request, user_id):
             price = form.cleaned_data["price"]
             seats = form.cleaned_data["seats"]
 
-            ride = Ride(date = date, driver = driver, departure_location = departure_location, destination_location = destination_location, departure_state = departure_state, destination_state = destination_state, price = price, seats = seats)
+            ride = Ride(date = date, driver = driver, departure_location = departure_location, destination_location = destination_location, departure_state = departure_state, destination_state = destination_state, price = price, seats = seats, time = time)
             ride.save()
             # ride = Ride.objects.create(date = date, driver = driver, departure_location = departure_location, destination_location = destination_location, departure_state = departure_state, destination_state = destination_state, price = price, seats = seats)
             return HttpResponseRedirect(reverse('post_ride_driver_result', args=(user_id,)))
