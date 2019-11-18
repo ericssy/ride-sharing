@@ -3,14 +3,53 @@
 {% bootstrap_css %}
 {% load socialaccount %}
 {% providers_media_js %}
-<form  method="post" action = "{% provider_login_url "google" %}">
-  {% csrf_token %}
-  <table>
-   {{form.as_table}}
- </table>
-  <button type="submit" class="btn btn-success" >Submit</button>
-  {% if user_flag %}
-      <script>alert("You have already signed up!")</script>
-  {% endif %}
 
-</form>
+
+<head>
+  <nav class="navbar navbar-dark" style="background-color:lightblue">
+  <a class="navbar-brand" href = "{% url 'index' %}">CavPool</a>
+</nav>
+</head>
+
+
+<style>
+    .col-sm-6 {
+        width: 80%;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    img {
+    border: 1px solid;
+    margin: 0 auto;
+    border-radius: 4px;
+    padding: 20px;
+    width: 55%;
+}
+</style>
+
+
+<body>
+  <div class="col-sm-6">
+    <div class="card-header" style="background-color: orange; border-color: transparent;">
+      <h3 style="color: white">New Member Sign Up</h3>
+    </div>
+    <div class="card">
+      <div class="card-body">
+		<form  method="post" action = "{% provider_login_url "google" %}">
+  		{% csrf_token %}
+  		<table>
+   		{{form.as_table}}
+ 		</table>
+ 		<div class = "text-center mt-4">
+ 		 <button type="submit" class="btn btn-primary" >Submit</button>
+  			{% if user_flag %}
+  		</div>
+  		
+     	 <script>alert("You have already signed up!")</script>
+  			{% endif %}
+		</form>
+	 </div>
+	</div>
+</div>
+</body>
