@@ -116,11 +116,18 @@ def profile(request, user_id):
 
 def ride(request, id):
     ride = get_object_or_404(Ride, pk = id)
+    rider = Rider.objects.get(pk=7)
     if request.method == "POST":
         form = RequestRideForm(request.POST)
         if form.is_valid() == True:
-            rider = Rider.objects.get(pk=7)
-            ride.pending_riders.add(rider)
+            if rider in ride.confirmed_riders.all():
+                ride.confirmed_riders.remove(rider)
+                ride.seats = ride.seats + 1
+                ride.save()
+            elif rider not in ride.confirmed_riders.all() and ride.seats > 0:
+                ride.confirmed_riders.add(rider)
+                ride.seats = ride.seats - 1
+                ride.save()
             # need to add if statements to determine if the car if full
 
             return HttpResponseRedirect(reverse('request_ride_result', args=(id,))) # here id refers to ride id
@@ -129,7 +136,7 @@ def ride(request, id):
         form = RequestRideForm()
     pending_riders = ride.pending_riders.all()
     confirmed_riders = ride.confirmed_riders.all()
-    context = {"ride" : ride, "pending_riders" : pending_riders, "confirmed_riders" : confirmed_riders}
+    context = {"ride" : ride, "pending_riders" : pending_riders, "confirmed_riders" : confirmed_riders, "user" : rider}
     return render(request, 'Rideshare_app/ride.html', context)
 
 def post_ride_driver(request, user_id):
