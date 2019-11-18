@@ -70,7 +70,7 @@
   </thead>
 
   <tbody>
-      {% for ride in pending_rides_list %}
+      {% for ride in upcoming_rides %}
         <tr>
       <td>{{ride.date}}</td>
       <td>{{ride.departure_location}}</td>
@@ -126,7 +126,7 @@
     </tr>
   </thead>
   <tbody>
-      {% for ride in upcoming_rides_list %}
+      {% for ride in upcoming_drives %}
         <tr>
       <td>{{ride.date}}</td>
       <td>{{ride.departure_location}}</td>
@@ -149,7 +149,7 @@
     </tr>
   </thead>
   <tbody>
-      {% for ride in past_rides %}
+      {% for ride in past_drives %}
         <tr>
       <td>{{ride.date}}</td>
       <td>{{ride.departure_location}}</td>

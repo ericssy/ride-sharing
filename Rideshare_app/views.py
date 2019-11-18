@@ -7,6 +7,7 @@ from django.utils import timezone
 from django.views.generic.list import ListView
 from .forms import PostRideAsDriverForm, RequestRideForm, SignUpForm
 from django.http import HttpResponse, HttpResponseRedirect
+from datetime import date
 
 def index(request):
     return render(request, 'Rideshare_app/homepage.html')
@@ -99,17 +100,18 @@ def profile(request, user_id):
     rider = user.rider
     driver_id = driver.id
     rider_id = rider.id
-    upcoming_rides_list = Ride.objects.filter(driver = driver_id, date__gte = timezone.now())
-    past_rides = Ride.objects.filter(driver = driver_id, date__lt = timezone.now())
+    upcoming_drives = Ride.objects.filter(driver = driver_id, date__gte = timezone.now())
+    past_drives = Ride.objects.filter(driver = driver_id, date__lt = timezone.now())
+    upcoming_rides = []
+    past_rides = []
+    for i in Ride.objects.all():
+        if rider in i.confirmed_riders.all():
+            if i.date >= date.today():
+                upcoming_rides.append(i)
+            else:
+                past_rides.append(i)
 
-    pending_ride_ids = getPendingRides(rider_id)
-    pending_rides_list = Ride.objects.filter(pk__in = pending_ride_ids, date__gte = timezone.now())
-
-
-
-    context = {"user" : user, "driver" : driver, "upcoming_rides_list" : upcoming_rides_list,
-                "past_rides" : past_rides, "rider" : rider,
-                "pending_rides_list" : pending_rides_list}
+    context = {"user" : user, "driver" : driver, "rider" : rider, "upcoming_drives" : upcoming_drives, "past_drives" : past_drives, "upcoming_rides" : upcoming_rides, "past_rides" : past_rides}
     return render(request, 'Rideshare_app/profile.html', context)
 
 
