@@ -1,5 +1,6 @@
 from django.db import models
 from django.forms import ModelForm
+from django.core.validators import MinValueValidator
 # Create your models here.
 
 
@@ -45,8 +46,8 @@ class Ride(models.Model):
 
     date = models.DateField()
     time = models.TimeField(blank = True, null = True)
-    seats = models.IntegerField(null = True, blank = True)
-    price = models.IntegerField(null = True, blank = True)
+    seats = models.IntegerField(null = True, blank = True, default=1, validators=[MinValueValidator(1)])
+    price = models.IntegerField(null = True, blank = True, default=0, validators=[MinValueValidator(0)])
     # each ride links to only one driver
     driver = models.ForeignKey(Driver, null = True, on_delete = models.CASCADE)
     riders = models.ManyToManyField(Rider, blank = True)
