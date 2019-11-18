@@ -24,9 +24,15 @@
 				document.getElementById("destination_city").innerHTML = param[1];
 			} else if (param[0] == "filter_departure_city" && param[1] != "") {
 				document.getElementById("departure_city").innerHTML = param[1];
+			} else if (param[0] == "filter_seats" && param[1] != "") {
+				document.getElementById("filter_seats").value = param[1];
 			} else if (param[0] == "filter_date" && param[1] != "") {
 				document.getElementById("date").innerHTML = param[1];
-			}
+			} else if (param[0] == "filter_time" && param[1] != "") {
+				document.getElementById("filter_time").value = param[1];
+			} else if (param[0] == "filter_price" && param[1] != "") {
+				document.getElementById("filter_price").value = param[1];
+			} 
 		}
 	});
 </script>
@@ -62,46 +68,46 @@
 					<form action="/search" method="get">
 						<h3>Additional Filters:</h3>
 						<label>Departure City</label>
-							<select name="filter_departure_city" class="custom-select">
+							<select name="filter_departure_city" class="custom-select" id = "filter_departure_city">
 								<option></option>
 								{% for city in avail_from_cities %}
 									<option value="{{city.departure_location}}">{{city.departure_location}}</option>
 								{% endfor %}
 							  </select>
 						<label>Departure State</label>
-							<select name="filter_departure_state" class="custom-select">
+							<select name="filter_departure_state" class="custom-select" id = "filter_departure_state">
 								<option></option>
 								{% for state in avail_from_states %}
 									<option value="{{state.departure_state}}">{{state.departure_state}}</option>
 								{% endfor %}
 							  </select>
 						<label>Destination City</label>
-							<select name="filter_destination_city" class="custom-select">
+							<select name="filter_destination_city" class="custom-select" id = "filter_destination_city">
 								<option></option>
 								{% for city in avail_to_cities %}
 									<option value="{{city.destination_location}}">{{city.destination_location}}</option>
 								{% endfor %}
 							  </select>
 						<label>Destination State</label>
-							<select name="filter_destination_state" class="custom-select">
+							<select name="filter_destination_state" class="custom-select" id = "filter_destination_state">
 								<option></option>
 							    {% for state in avail_to_states %}
 									<option value="{{state.destination_state}}">{{state.destination_state}}</option>
 								{% endfor %}
 							  </select>
 						<label>Date</label>
-							<input type="date" name="filter_date" class="form-control">
+							<input type="date" name="filter_date" class="form-control" id = "filter_date">
 						<label>Time</label>
-							<select name="filter_time" class="custom-select">
+							<select name="filter_time" class="custom-select" id = "filter_time">
 								<option></option>
 								<option value="Morning">12am-11:59am</option>
 								<option value="Afternoon">12pm-4:59pm</option>
 								<option value="Evening">5pm-11:59pm</option>
 							</select>
 						<label>Price ($)</label>
-							<input type="number" name="filter_price" class="col-sm-8 form-control" min="0">
+							<input type="number" name="filter_price" class="col-sm-8 form-control" min="0" id = "filter_price">
 						<label>Number of Passengers</label>
-							<input type="number" name="filter_seats" class="col-sm-8 form-control" min="0" max="10">
+							<input type="number" value=""  name="filter_seats" class="col-sm-8 form-control" min="0" max="10" id = filter_seats>
 						<div class = "text-center mt-4">
 							<button type="submit" class="btn">Apply</button>
 						</div>
@@ -119,12 +125,12 @@
 						<li class="list-group-item">Departure: {{ride.departure_location}}</li>
 						<li class="list-group-item">Destination: {{ride.destination_location}}</li>
 						<li class="list-group-item">Date: {{ride.date}}</li>
+						<li class ="list-group-item">Price for Ride: {{ride.price}} </li>
 					</ul>
-					<div class="card-body">
 						<div class = "text-center mt-4">
 							<a href="{% url 'ride' ride.id %}" class="btn btn-primary">Details</a>
 					</div>
-					</div>
+					<br>
 				</div>
 			</div>
 		{% endfor %}
