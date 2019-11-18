@@ -57,7 +57,7 @@ def login(request):
                 Driver.objects.create(first_name = first_name, last_name = last_name, email = email, venmo = venmo, phone_number = phone_number)
                 Current_Rider = Rider.objects.get(email=email)
                 Current_Driver = Driver.objects.get(email=email)
-                User.objects.create(first_name = first_name, last_name = last_name, email = email, venmo = venmo, phone_number = phone_number, driver = Current_Rider, rider = Current_User)
+                User.objects.create(first_name = first_name, last_name = last_name, email = email, venmo = venmo, phone_number = phone_number, driver = Current_Driver, rider = Current_Rider)
             else:
                 return render(request, 'Rideshare_app/sign_up_form.html', {"form" : form, "user_flag" : True})
 
