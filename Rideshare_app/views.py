@@ -116,10 +116,10 @@ def profile(request, user_id):
 
 def ride(request, id):
     ride = get_object_or_404(Ride, pk = id)
+    rider = Rider.objects.get(pk=4)
     if request.method == "POST":
         form = RequestRideForm(request.POST)
         if form.is_valid() == True:
-            rider = Rider.objects.get(pk=7)
             ride.pending_riders.add(rider)
             # need to add if statements to determine if the car if full
 
