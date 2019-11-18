@@ -57,7 +57,7 @@ def login(request):
                 Driver.objects.create(first_name = first_name, last_name = last_name, email = email, venmo = venmo, phone_number = phone_number)
                 Current_Rider = Rider.objects.get(email=email)
                 Current_Driver = Driver.objects.get(email=email)
-                User.objects.create(first_name = first_name, last_name = last_name, email = email, venmo = venmo, phone_number = phone_number, driver = None, rider = None)
+                User.objects.create(first_name = first_name, last_name = last_name, email = email, venmo = venmo, phone_number = phone_number, driver = Current_Rider, rider = Current_User)
             else:
                 return render(request, 'Rideshare_app/sign_up_form.html', {"form" : form, "user_flag" : True})
 
@@ -122,7 +122,7 @@ def ride(request, id):
             rider = Rider.objects.get(pk=7)
             ride.pending_riders.add(rider)
             # need to add if statements to determine if the car if full
-            
+
             return HttpResponseRedirect(reverse('request_ride_result', args=(id,))) # here id refers to ride id
             #return render(request, 'Rideshare_app/post_ride_driver.html', {"form" : form, "driver" : driver})
     else:
