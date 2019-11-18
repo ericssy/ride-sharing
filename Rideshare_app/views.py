@@ -50,14 +50,21 @@ def login(request):
             email = form.cleaned_data["email"]
             venmo = form.cleaned_data["venmo"]
             phone_number = form.cleaned_data["phone_number"]
-            Rider.objects.create(first_name = first_name, last_name = last_name, email = email, venmo = venmo, phone_number = phone_number)
-            Driver.objects.create(first_name = first_name, last_name = last_name, email = email, venmo = venmo, phone_number = phone_number)
-            Current_Rider = Rider.objects.get(email=request.user.email)
-            Current_Driver = Driver.objects.get(email=request.user.email)
-            User.objects.create(first_name = first_name, last_name = last_name, email = email, venmo = venmo, phone_number = phone_number, driver = None, rider = None)
+            try:
+                Current_User = User.objects.get(email=email)
+            except:
+                Rider.objects.create(first_name = first_name, last_name = last_name, email = email, venmo = venmo, phone_number = phone_number)
+                Driver.objects.create(first_name = first_name, last_name = last_name, email = email, venmo = venmo, phone_number = phone_number)
+                Current_Rider = Rider.objects.get(email=email)
+                Current_Driver = Driver.objects.get(email=email)
+                User.objects.create(first_name = first_name, last_name = last_name, email = email, venmo = venmo, phone_number = phone_number, driver = None, rider = None)
+            else:
+                return render(request, 'Rideshare_app/sign_up_form.html', {"form" : form, "user_flag" : True})
+
+
     else:
         form = SignUpForm()
-    return render(request, 'Rideshare_app/sign_up_form.html', {"form" : form})
+    return render(request, 'Rideshare_app/sign_up_form.html', {"form" : form, "user_flag" : False})
 
 def getPendingRides(rider_id):
     all_rides = Rider.objects.all()

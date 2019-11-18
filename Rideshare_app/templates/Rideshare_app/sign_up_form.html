@@ -1,10 +1,16 @@
 <html>
 {% load bootstrap4 %}
 {% bootstrap_css %}
-<form  method="post">
+{% load socialaccount %}
+{% providers_media_js %}
+<form  method="post" action = "{% provider_login_url "google" %}">
   {% csrf_token %}
   <table>
    {{form.as_table}}
  </table>
-  <button type="submit" class="btn btn-success">Submit</button>
+  <button type="submit" class="btn btn-success" >Submit</button>
+  {% if user_flag %}
+      <script>alert("You have already signed up!")</script>
+  {% endif %}
+
 </form>
