@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from django.views.generic.list import ListView
-from .forms import PostRideAsDriverForm, RequestRideForm
+from .forms import PostRideAsDriverForm, RequestRideForm, SignUpForm
 from django.http import HttpResponse, HttpResponseRedirect
 
 def index(request):
@@ -42,7 +42,29 @@ def search(request):
     return render(request, 'Rideshare_app/search.html', context)
 
 def login(request):
-	return HttpResponse("Display login!")
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid() == True:
+            first_name = form.cleaned_data["first_name"]
+            last_name = form.cleaned_data["last_name"]
+            email = form.cleaned_data["email"]
+            venmo = form.cleaned_data["venmo"]
+            phone_number = form.cleaned_data["phone_number"]
+            try:
+                Current_User = User.objects.get(email=email)
+            except:
+                Rider.objects.create(first_name = first_name, last_name = last_name, email = email, venmo = venmo, phone_number = phone_number)
+                Driver.objects.create(first_name = first_name, last_name = last_name, email = email, venmo = venmo, phone_number = phone_number)
+                Current_Rider = Rider.objects.get(email=email)
+                Current_Driver = Driver.objects.get(email=email)
+                User.objects.create(first_name = first_name, last_name = last_name, email = email, venmo = venmo, phone_number = phone_number, driver = None, rider = None)
+            else:
+                return render(request, 'Rideshare_app/sign_up_form.html', {"form" : form, "user_flag" : True})
+
+
+    else:
+        form = SignUpForm()
+    return render(request, 'Rideshare_app/sign_up_form.html', {"form" : form, "user_flag" : False})
 
 def getPendingRides(rider_id):
     all_rides = Rider.objects.all()
