@@ -1,6 +1,7 @@
 from django.db import models
 from django.forms import ModelForm
 from django.core.validators import MinValueValidator
+from django.contrib.auth.models import User as User_Auth
 # Create your models here.
 
 
@@ -28,6 +29,7 @@ class Driver(models.Model):
         return self.first_name + " " + self.last_name;
 
 class User(models.Model):
+    user = models.OneToOneField(User_Auth, related_name='user', null = True, on_delete = models.CASCADE)
     first_name = models.CharField(max_length = 30)
     last_name = models.CharField(max_length = 30)
     email = models.CharField(max_length = 100)
@@ -37,6 +39,7 @@ class User(models.Model):
     rider = models.ForeignKey(Rider, null = True, on_delete = models.CASCADE)
     def __str__(self):
         return self.first_name + " " + self.last_name;
+
 
 class Ride(models.Model):
     departure_location = models.CharField(max_length = 30)

@@ -5,12 +5,29 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from django.views.generic.list import ListView
-from .forms import PostRideAsDriverForm, RequestRideForm, SignUpForm
+from .forms import PostRideAsDriverForm, RequestRideForm, SignUpForm, LoginForm
 from django.http import HttpResponse, HttpResponseRedirect
 from datetime import date
+from django.contrib.auth.decorators import login_required
+from social_django.models import UserSocialAuth
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User as User_Auth
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as login_auth
+from django.contrib.auth import logout as logout_auth
+
 
 def index(request):
-    return render(request, 'Rideshare_app/homepage.html')
+    if (request.user.is_authenticated):
+        email = request.user.username
+        user_auth = User_Auth.objects.get(username = email)
+        user = user_auth.user
+        user_id = user.id
+    else:
+        user_id = 4
+    context = {"user_id" : user_id}
+    return render(request, 'Rideshare_app/homepage.html', context)
+
 
 def search(request):
     rides_list = Ride.objects.all()
@@ -42,7 +59,8 @@ def search(request):
     context = {"rides_list" : rides_list, "avail_to_cities" : avail_to_cities, "avail_from_cities" : avail_from_cities, "avail_to_states" : avail_to_states, "avail_from_states" : avail_from_states}
     return render(request, 'Rideshare_app/search.html', context)
 
-def login(request):
+
+def sign_up(request):
     if request.method == "POST":
         form = SignUpForm(request.POST)
         if form.is_valid() == True:
@@ -51,21 +69,86 @@ def login(request):
             email = form.cleaned_data["email"]
             venmo = form.cleaned_data["venmo"]
             phone_number = form.cleaned_data["phone_number"]
-            try:
-                Current_User = User.objects.get(email=email)
-            except:
-                Rider.objects.create(first_name = first_name, last_name = last_name, email = email, venmo = venmo, phone_number = phone_number)
-                Driver.objects.create(first_name = first_name, last_name = last_name, email = email, venmo = venmo, phone_number = phone_number)
-                Current_Rider = Rider.objects.get(email=email)
-                Current_Driver = Driver.objects.get(email=email)
-                User.objects.create(first_name = first_name, last_name = last_name, email = email, venmo = venmo, phone_number = phone_number, driver = Current_Driver, rider = Current_Rider)
+            if User_Auth.objects.filter(username = email).exists():
+                user_auth = User_Auth.objects.get(username = email)
+                user = User.objects.get(user = user_auth)
+                user_id = user.id
+                user_login = authenticate(request, username = email, password = "password")
+                if user_login is not None:
+                        login_auth(request, user_login, backend='django.contrib.auth.backends.ModelBackend')
+                else:
+                    return HttpResponseRedirect(reverse('index', args=()))
             else:
-                return render(request, 'Rideshare_app/sign_up_form.html', {"form" : form, "user_flag" : True})
+                user_auth = User_Auth.objects.create_user(username = email, email = email, password = "password")
+                Current_Rider = Rider.objects.create(first_name = first_name, last_name = last_name, email = email, venmo = venmo, phone_number = phone_number)
+                Current_Driver = Driver.objects.create(first_name = first_name, last_name = last_name, email = email, venmo = venmo, phone_number = phone_number)
+                user = User.objects.create(user = user_auth, first_name = first_name, last_name = last_name, email = email, venmo = venmo, phone_number = phone_number, driver = Current_Driver, rider = Current_Rider)
+                user_id = user.id
+                user_login = authenticate(request, username = email, password = "password")
+                if user_login is not None:
+                        login_auth(request, user_login, backend='django.contrib.auth.backends.ModelBackend')
+                else:
+                    return HttpResponseRedirect(reverse('index', args=()))
+        return HttpResponseRedirect(reverse('profile', args=(user_id,)))
+    else:
+        form = SignUpForm()
+    return render(request, 'Rideshare_app/sign_up_form.html', {"form" : form, "user_flag" : False})
+
+
+def login(request):
+    #user = User_Auth.objects.create_user('john', '12345@virginia.edu', 'johnpassword')
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+    else:
+        form = LoginForm()
+    return render(request, 'Rideshare_app/log_in_form.html', {"form" : form, "user_flag" : False})
+
+
+    '''
+    email = request.user.email
+    if (User.objects.filter(email = email).exists()):
+        return HttpResponseRedirect(reverse('index', args=()))
+
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid() == True:
+            first_name = form.cleaned_data["first_name"]
+            last_name = form.cleaned_data["last_name"]
+            email = form.cleaned_data["email"]
+            venmo = form.cleaned_data["venmo"]
+            phone_number = form.cleaned_data["phone_number"]
+
+            if (User_Auth.objects.filter(email = email).exists()):
+                user = authenticate(request, username = "Siyuan", password = "ssy19981025")
+                if user is not None:
+                    login_auth(request, user)
+                else:
+                    return HttpResponseRedirect(reverse('search', args=()))
+                return HttpResponseRedirect(reverse('index', args=()))
+            else:
+                User_Auth
+                Current_Rider = Rider.objects.create(first_name = first_name, last_name = last_name, email = email, venmo = venmo, phone_number = phone_number)
+                Current_Driver = Driver.objects.create(first_name = first_name, last_name = last_name, email = email, venmo = venmo, phone_number = phone_number)
+                #Current_Rider = Rider.objects.get(email=email)
+                #Current_Driver = Driver.objects.get(email=email)
+                User.objects.create(first_name = first_name, last_name = last_name, email = email, venmo = venmo, phone_number = phone_number, driver = Current_Driver, rider = Current_Rider)
+                #action = "{% provider_login_url "google" %}"
+                return HttpResponseRedirect(reverse('index', args=()))
+            #else:
+                #return render(request, 'Rideshare_app/sign_up_form.html', {"form" : form, "user_flag" : True})
 
 
     else:
         form = SignUpForm()
     return render(request, 'Rideshare_app/sign_up_form.html', {"form" : form, "user_flag" : False})
+    '''
+def google_sign_up(request):
+    context = {}
+    return render(request, 'Rideshare_app/google_sign_up.html', context)
+
+def Logout(request):
+    logout_auth(request)
+    return HttpResponseRedirect('/')
 
 def getPendingRides(rider_id):
     all_rides = Rider.objects.all()
@@ -118,7 +201,15 @@ def profile(request, user_id):
 
 def ride(request, id):
     ride = get_object_or_404(Ride, pk = id)
-    rider = Rider.objects.get(pk=4)
+    if (request.user.is_authenticated):
+        email = request.user.username
+        user_auth = User_Auth.objects.get(username = email)
+        user = user_auth.user
+        user_id = user.id
+        rider = user.rider
+    else:
+        rider = Rider.objects.get(pk=4)
+
     if request.method == "POST":
         form = RequestRideForm(request.POST)
         if form.is_valid() == True:

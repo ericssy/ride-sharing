@@ -1,6 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 from Rideshare_app.models import Rider, Driver, Ride, User
+from django.contrib.auth.models import User as User_Auth
 from django.forms import HiddenInput
 from django.core.validators import MinValueValidator
 
@@ -25,3 +26,7 @@ class SignUpForm(ModelForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email', 'venmo', 'phone_number')
+
+class LoginForm(forms.Form):
+    email = forms.CharField(label='email')
+    

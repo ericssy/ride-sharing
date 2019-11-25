@@ -1,5 +1,7 @@
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls import include, url
 
 from . import views
 from django.views.generic import TemplateView
@@ -8,7 +10,17 @@ from .views import RidesListView
 urlpatterns = [
  	path('', views.index, name='index'),
     path('search', views.search, name='search'),
-    #path('/login', views.login, name='login'),
+
+    path('', include('social_django.urls', namespace='social')),
+    url(r'^account/', include('social_django.urls', namespace='social')),
+    #url(r'^account/', include('django.contrib.auth.urls', namespace='auth')),
+    path('accounts/', include('django.contrib.auth.urls')),
+    #url(r'^admin/', include(admin.site.urls)),
+    path('login2', views.login, name='login'),
+    path('sign_up', views.sign_up, name = 'sign_up'),
+    path('auth/', include(('social_django.urls', 'social_django'), namespace='social')),
+    path('logout', views.Logout, name = 'logout'),
+    path('google_sign_up', views.google_sign_up, name = "google_sign_up"),
     path('<int:rider_id>/rider_profile', views.rider_profile, name= 'rider_profile'),
     path('<int:user_id>/profile', views.profile, name= 'profile'),
     path('<int:id>/ride', views.ride, name= 'ride'),

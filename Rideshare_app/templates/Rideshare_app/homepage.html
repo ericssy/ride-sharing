@@ -26,11 +26,20 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="4/profile">Profile</a>
+        <a class="nav-link" href= "{% url 'profile' user_id %}">Profile</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/login">Login</a>
+      {% if request.user.is_authenticated %}
+            <p>{{ request.user.email}}</p>
+      {% else %}
+            <a class="nav-link" href="/sign_up">Login</a>
+      {% endif %}
       </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="logout">Log out</a>
+      </li>
+
     </ul>
   </div>
 </nav>
