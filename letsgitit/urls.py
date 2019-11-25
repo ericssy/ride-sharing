@@ -18,11 +18,15 @@ from django.contrib import admin
 from django.urls import include, path
 from django.views.generic import TemplateView
 from Rideshare_app import views
-
+from django.urls import path
+from django.conf import settings
+from django.conf.urls import include, url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('', include('Rideshare_app.urls')),
-    path('login/', views.login),
+    #path('login/', views.login, name = "login"),
+    url(r'^', include('Rideshare_app.urls')),
+
 ]
