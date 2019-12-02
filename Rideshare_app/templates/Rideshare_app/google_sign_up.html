@@ -1,5 +1,22 @@
+{% load bootstrap4 %}
+{% bootstrap_css %}
 <html>
-
-  <a href="{% url 'social:begin' 'google-oauth2' %}"> Google Login</a>
-
+	<link rel="stylesheet" type="text/css" href="post_ride.css">
+	<link rel="stylesheet" type="text/css" href="profile.css">
+	<nav class="navbar navbar-dark" style="background-color: lightblue">
+	<a class="navbar-brand" href="{% url 'index' %}">CavPool</a>
+	<ul class="navbar-nav">
+	</ul>
+	</nav>
+	<br>
+	<br>
+	<div style ="text-align: center">
+		<h1 style = "color: orange">
+			Login through Google
+		</h1>
+		<br>
+		<a href="{% url 'social:begin' 'google-oauth2' %}">
+	        <button class="btn btn-primary">Login</button>
+	    </a>
+	</div>
 </html>
