@@ -11,7 +11,7 @@ Login/Create an Account:
 Before using the application, click the Login button on the left of the navigation bar. This button will lead you to a Google login page which sign you up for an account if logging in for the first time. This will create an account, log you in, and navigate back to the home page where you can post and search for rides. 
 
 
-Functional Features with Instructions:
+Other Functional Features with Instructions:
 
 1. Search for a Ride  - allows user to search for a ride using basic information
 
