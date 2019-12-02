@@ -234,7 +234,7 @@ def ride(request, id):
         form = RequestRideForm()
     pending_riders = ride.pending_riders.all()
     confirmed_riders = ride.confirmed_riders.all()
-    context = {"ride" : ride, "pending_riders" : pending_riders, "confirmed_riders" : confirmed_riders, "user" : rider}
+    context = {"ride" : ride, "pending_riders" : pending_riders, "confirmed_riders" : confirmed_riders, "user" : rider, "user_id": user_id}
     return render(request, 'Rideshare_app/ride.html', context)
 
 def post_ride_driver(request, user_id):
@@ -262,7 +262,7 @@ def post_ride_driver(request, user_id):
             #return render(request, 'Rideshare_app/post_ride_driver.html', {"form" : form, "driver" : driver})
     else:
         form = PostRideAsDriverForm()
-    return render(request, 'Rideshare_app/post_ride_driver.html', {"form" : form, "driver" : driver, "ride" : ride})
+    return render(request, 'Rideshare_app/post_ride_driver.html', {"form" : form, "driver" : driver, "ride" : ride, "user_id": user_id})
 
 def post_ride_driver_result(request, user_id):
     user = get_object_or_404(User, pk = user_id)
@@ -281,7 +281,14 @@ def request_ride_result(request, id):
     context = {"ride" : ride, "user_id": user_id}
     return render(request, 'Rideshare_app/request_ride_result.html', context)
 
-
+def delete_view(request, ride_id):
+    ride = Ride.objects.get(id=ride_id)
+    ride.delete()
+    email = request.user.username
+    user_auth = User_Auth.objects.get(username = email)
+    user = user_auth.user
+    context = {"user": user}
+    return render(request, 'Rideshare_app/post_ride_driver_result.html', context)
 
 class RidesListView(generic.ListView):
     template_name = 'Rideshare_app/upcoming_rides_list.html'

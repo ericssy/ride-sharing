@@ -28,4 +28,5 @@ urlpatterns = [
     path('<int:user_id>/profile/post_a_ride', views.post_ride_driver, name = "post_ride_driver"),
     path('<int:user_id>/profile/post_a_ride/success', views.post_ride_driver_result, name = "post_ride_driver_result"),
     path('<int:id>/ride/request_ride_result', views.request_ride_result, name = "request_ride_result"),
+    path('delete/<int:ride_id>/', views.delete_view, name='delete_view'),
 ]
