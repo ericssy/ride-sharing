@@ -124,23 +124,29 @@
 		</nav>
 	</div>
 	<div class="col-sm-9 row">
-		{% for ride in rides_list %}
-			<div class="col-sm-4">
-				<div class="card">
-					<div class="card-header">Driver: {{ride.driver}}</div>
-					<ul class="list-group list-group-flush">
-						<li class="list-group-item">Departure: {{ride.departure_location}}</li>
-						<li class="list-group-item">Destination: {{ride.destination_location}}</li>
-						<li class="list-group-item">Date: {{ride.date}}</li>
-						<li class ="list-group-item">Price for Ride: {{ride.price}} </li>
-					</ul>
-						<div class = "text-center mt-4">
-							<a href="{% url 'ride' ride.id %}" class="btn btn-primary">Details</a>
+		{% if rides_list %}
+			{% for ride in rides_list %}
+				<div class="col-sm-4">
+					<div class="card">
+						<div class="card-header">Driver: {{ride.driver}}</div>
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item">Departure: {{ride.departure_location}}</li>
+							<li class="list-group-item">Destination: {{ride.destination_location}}</li>
+							<li class="list-group-item">Date: {{ride.date}}</li>
+							<li class ="list-group-item">Price for Ride: {{ride.price}} </li>
+						</ul>
+							<div class = "text-center mt-4">
+								<a href="{% url 'ride' ride.id %}" class="btn btn-primary">Details</a>
+						</div>
+						<br>
 					</div>
-					<br>
 				</div>
+			{% endfor %}
+		{% else %}
+			<div class="col text-center">
+				<h1>No results, please try a new search!</h1>
 			</div>
-		{% endfor %}
+		{% endif %}
 	</div>
 </div>
 </body>
