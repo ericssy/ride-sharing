@@ -56,7 +56,12 @@ def search(request):
     avail_to_states = Ride.objects.all().values('destination_state').distinct()
     avail_from_states = Ride.objects.all().values('departure_state').distinct()
 
-    context = {"rides_list" : rides_list, "avail_to_cities" : avail_to_cities, "avail_from_cities" : avail_from_cities, "avail_to_states" : avail_to_states, "avail_from_states" : avail_from_states}
+    email = request.user.username
+    user_auth = User_Auth.objects.get(username = email)
+    user = user_auth.user
+    user_id = user.id
+
+    context = {"user_id" : user_id, "rides_list" : rides_list, "avail_to_cities" : avail_to_cities, "avail_from_cities" : avail_from_cities, "avail_to_states" : avail_to_states, "avail_from_states" : avail_from_states}
     return render(request, 'Rideshare_app/search.html', context)
 
 
@@ -269,7 +274,11 @@ def post_ride_driver_result(request, user_id):
 
 def request_ride_result(request, id):
     ride = get_object_or_404(Ride, pk = id)
-    context = {"ride" : ride}
+    email = request.user.username
+    user_auth = User_Auth.objects.get(username = email)
+    user = user_auth.user
+    user_id = user.id
+    context = {"ride" : ride, "user_id": user_id}
     return render(request, 'Rideshare_app/request_ride_result.html', context)
 
 
