@@ -1,13 +1,14 @@
 # project-103-letsgitit
 
+Application Link: https://project-103-letsgitit.herokuapp.com/
+
 Basic Summary of the App:
 CavPool is a UVA ride-sharing application that allows users to search and reserve rides to and from Charlottesville. A user can function as a driver or a rider, allowing them to search and offer rides to other users on the platform. 
 
 User Profile includes upcoming and past trips (rides and drives). Scheduled rides can be viewed and altered from the profile page. 
 
-
-Test Accounts:
-
+Login/Create an Account: 
+Before using the application, click the Login button on the left of the navigation bar. This button will lead you to a Google login page which sign you up for an account if logging in for the first time. This will create an account, log you in, and navigate back to the home page where you can post and search for rides. 
 
 
 Functional Features with Instructions:
