@@ -12,6 +12,10 @@
     var mm = String(today.getMonth()+1);
     var yyyy = today.getFullYear();
     document.getElementById("filter_date").value = yyyy+'-'+mm+'-'+dd;
+    {% if not request.user.is_authenticated %}
+      document.getElementById("search_btn").value = "Please Login First!";
+      document.getElementById("search_btn").disabled = true;
+    {% endif %}
   })
 </script>
 
@@ -101,7 +105,7 @@ body, html {
                             Date Leaving: <br>
                             <input type="date" id="filter_date" name="filter_date" class="white-text form-control" >
                             <div class="text-center mt-4">
-                              <input class="btn btn-primary" type="submit" value="Search All">
+                              <input class="btn btn-primary" type="submit" id="search_btn" value="Search All">
                             </div>
                             <hr class="hr-light mb-3 mt-4">
                         </form>
