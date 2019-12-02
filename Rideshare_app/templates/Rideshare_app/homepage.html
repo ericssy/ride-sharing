@@ -30,11 +30,30 @@
       </li>
       <li class="nav-item">
       {% if request.user.is_authenticated %}
-            <p>{{ request.user.email}}</p>
+            <p>{{ request.user}}</p>
       {% else %}
             <a class="nav-link" href="/sign_up">Login</a>
       {% endif %}
       </li>
+    </li>
+    <li class="nav-item">
+    {% if request.user.is_authenticated %}
+          <p></p>
+    {% else %}
+          <a class="nav-link" href="/google_sign_up">Google Login</a>
+    {% endif %}
+    </li>
+
+    <li class="nav-item">
+    {% if request.user.is_authenticated %}
+          <p> {{user.email}} </p>
+    {% else %}
+
+    {% endif %}
+    </li>
+
+
+
 
       <li class="nav-item">
         <a class="nav-link" href="logout">Log out</a>
