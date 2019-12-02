@@ -22,6 +22,7 @@ Functional Features with Instructions:
       Instructions: After clicking "Search All", on the search page, filter by Departure city, departure state, destination         city,destination state, date, time, price and/or number of passengers and click "Apply". 
         *If there are rides available with all applicable filters, they will be shown. If not, no rides will be shown. 
         *Options for the filters are fed only by the available data in the database
+        *If filtering by price, it shows price results at or less than the input value, no greater price results will be                shown.
   
 4. Reserve a Ride - allows a user to pick a specific ride and confirm a spot for that ride
       Instructions: Select a ride from the search page and click "Details". Check if all information on the Trip Details page       is sufficient and click "Request a Ride Here". 
