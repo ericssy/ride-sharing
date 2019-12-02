@@ -15,12 +15,17 @@ from django.contrib.auth.models import User as User_Auth
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as login_auth
 from django.contrib.auth import logout as logout_auth
+from social_django import models as oauth_models
 
 
-def index(request):
+def index(request, google_login = False):
     if (request.user.is_authenticated):
-        email = request.user.username
-        user_auth = User_Auth.objects.get(username = email)
+        email = request.user.email
+        username = request.user.username
+        if (User_Auth.objects.filter(username = email).exists() == False):
+            user_auth = User_Auth.objects.get(username = email)
+        else:
+            user_auth = User_Auth.objects.get(username = username)
         user = user_auth.user
         user_id = user.id
     else:
@@ -66,6 +71,30 @@ def search(request):
 
 
 def sign_up(request):
+    if (request.user.is_authenticated):
+        email = request.user.email
+        username = request.user.username
+        if (User_Auth.objects.filter(username = email).exists() == False):
+            first_name = request.user.first_name
+            last_name = request.user.last_name
+            user_auth = User_Auth.objects.create_user(username = email, email = email, password = "password")
+            Current_Rider = Rider.objects.create(first_name = first_name, last_name = last_name, email = email)
+            Current_Driver = Driver.objects.create(first_name = first_name, last_name = last_name, email = email)
+            user = User.objects.create(user = user_auth, first_name = first_name, last_name = last_name, email = email, driver = Current_Driver, rider = Current_Rider)
+            user_id = user.id
+            logout_auth(request)
+            user_login = authenticate(request, username = email, password = "password")
+            if user_login is not None:
+                login_auth(request, user_login, backend='django.contrib.auth.backends.ModelBackend')
+                return HttpResponseRedirect(reverse('index', args=()))
+            else:
+                return HttpResponseRedirect(reverse('index', args=()))
+        else:
+            logout_auth(request)
+            user_login = authenticate(request, username = email, password = "password")
+            login_auth(request, user_login, backend='django.contrib.auth.backends.ModelBackend')
+            return HttpResponseRedirect(reverse('index', args=()))
+            
     if request.method == "POST":
         form = SignUpForm(request.POST)
         if form.is_valid() == True:
@@ -148,7 +177,8 @@ def login(request):
     return render(request, 'Rideshare_app/sign_up_form.html', {"form" : form, "user_flag" : False})
     '''
 def google_sign_up(request):
-    context = {}
+    google_login = True
+    context = {"google_login" : google_login}
     return render(request, 'Rideshare_app/google_sign_up.html', context)
 
 def Logout(request):

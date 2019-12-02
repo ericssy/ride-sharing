@@ -32,13 +32,13 @@
       <li class="nav-item">
       {% if request.user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link" href= "{% url 'profile' user_id %}">Profile ({{ request.user.email}})</a>          
+          <a class="nav-link" href= "{% url 'profile' user_id %}">Profile ({{ request.user}})</a>          
         </li>
         <li class="nav-item">
           <a class="nav-link" href="logout">Log out</a>
         </li>
       {% else %}
-            <a class="nav-link" href="/sign_up">Login</a>
+            <a class="nav-link" href="/google_sign_up">Login</a>
       {% endif %}
       </li>
     </ul>
