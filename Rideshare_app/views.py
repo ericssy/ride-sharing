@@ -38,8 +38,12 @@ def search(request):
     rides_list = Ride.objects.all()
     if request.GET.get('filter_departure_city'):
         rides_list = rides_list.filter(departure_location__iexact = request.GET.get('filter_departure_city'))
+    if request.GET.get('filter_departure_state'):
+        rides_list = rides_list.filter(departure_state__iexact = request.GET.get('filter_departure_state'))
     if request.GET.get('filter_destination_city'):
         rides_list = rides_list.filter(destination_location__iexact = request.GET.get('filter_destination_city'))
+    if request.GET.get('filter_destination_state'):
+        rides_list = rides_list.filter(destination_state__iexact = request.GET.get('filter_destination_state'))
     if request.GET.get('filter_date'):
         rides_list = rides_list.filter(date__gte = request.GET.get('filter_date'))
     else:
@@ -94,7 +98,7 @@ def sign_up(request):
             user_login = authenticate(request, username = email, password = "password")
             login_auth(request, user_login, backend='django.contrib.auth.backends.ModelBackend')
             return HttpResponseRedirect(reverse('index', args=()))
-            
+
     if request.method == "POST":
         form = SignUpForm(request.POST)
         if form.is_valid() == True:
