@@ -23,6 +23,7 @@ Instructions: Start at homepage, and click "Search All" to view all rides. If yo
 3. Filter Rides - allows user to filter the basic search with additional filters to narrow the search
 
 Instructions: After clicking "Search All", on the search page, filter by Departure city, departure state, destination         city,destination state, date, time, price and/or number of passengers and click "Apply". 
+
 *If there are rides available with all applicable filters, they will be shown. If not, no rides will be shown. 
 *Options for the filters are fed only by the available data in the database
 *If filtering by price, it shows price results at or less than the input value, no greater price results will be                shown.
