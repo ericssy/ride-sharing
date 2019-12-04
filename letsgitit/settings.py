@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'social_django',
+    'social.apps.django_app.default',
 ]
 
 MIDDLEWARE = [
@@ -177,7 +178,7 @@ SOCIAL_AUTH_GOOGLE_PLUS_SCOPE = [
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = "661678998274-d88uj2b5dg5ubo3tjt6jovpifugrrj2l.apps.googleusercontent.com"
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '352Ez-sVvI8VuwZvfaVA_JPI'
 
-LOGIN_URL = '/google_sign_up'
+LOGIN_URL = '/'
 
 LOGIN_REDIRECT_URL = '/sign_up'
 LOGOUT_REDIRECT_URL = '/'
