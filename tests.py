@@ -51,13 +51,6 @@ class UserTestCase2(TestCase):
         User2_venmo = User2.venmo
         self.assertEqual(User2_venmo, "ShubhiM")
 
-
-class LoginTestCase(unittest.TestCase):
-    def test_drivers_routes(self):
-        resolver = resolve('/login/')
-        self.assertEqual(resolver.view_name, 'django.views.generic.base.TemplateView')
-
-
 class RidesListViewTests(TestCase):
     def test_empty_ride_list(self):
         response = self.client.get(reverse('upcoming_rides_list'))
